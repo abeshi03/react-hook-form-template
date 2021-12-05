@@ -4,6 +4,9 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
 import {SubmitHandler, useForm, FormProvider, FieldError} from "react-hook-form";
 
+// - アセット ===========================================================================================================
+import styles from "./SignUpControlGroup.module.scss";
+
 // - 子コンポーネント =====================================================================================================
 import { InputField } from "../../../atoms/InputField/InputField";
 
@@ -52,26 +55,32 @@ export const SignUpControlGroup: VFC = memo(() => {
 
   return (
     <FormProvider { ...methods }>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <InputField
-          type="text"
-          required
-          inputValue={signUpInputValue.email}
-          label="メールアドレス"
-          placeholder="メールアドレスを入力してください"
-        />
-        {methods.formState.errors.email && emailErrorMessages(methods.formState.errors.email)}
+      <form className={styles.signInControlGroup} onSubmit={methods.handleSubmit(onSubmit)}>
 
-        <InputField
-          type="text"
-          required
-          inputValue={signUpInputValue.password}
-          maxLength={6}
-          label="パスワード"
-          guidance="※パスワードは最低6文字以上で入力してください"
-          placeholder="パスワードは最低6文字以上で入力してください"
-        />
-        {methods.formState.errors.password && passwordErrorMessages(methods.formState.errors.password)}
+        <div className={styles.inputContainer}>
+          <InputField
+            type="text"
+            required
+            inputValue={signUpInputValue.email}
+            label="メールアドレス"
+            placeholder="メールアドレスを入力してください"
+          />
+          {methods.formState.errors.email && emailErrorMessages(methods.formState.errors.email)}
+        </div>
+
+        <div className={styles.inputContainer}>
+          <InputField
+            type="text"
+            required
+            inputValue={signUpInputValue.password}
+            minLength={6}
+            maxLength={10}
+            label="パスワード"
+            guidance="※パスワードは最低6文字以上で入力してください"
+            placeholder="パスワードを入力してください"
+          />
+          {methods.formState.errors.password && passwordErrorMessages(methods.formState.errors.password)}
+        </div>
 
         <button type="submit">送信</button>
       </form>
