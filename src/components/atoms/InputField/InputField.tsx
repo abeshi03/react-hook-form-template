@@ -40,10 +40,13 @@ export const InputField: VFC<Props> = memo((props) => {
   const { register } = useFormContext();
 
   return (
-    <div className={styles.inputField}>
-      {label && <label htmlFor={label}>{label}</label>}
-      {required && <span>必須</span>}
+    <div className={styles.inputFieldContainer}>
+      <div className={styles.labelAndRequiredBadge}>
+        {label && <label htmlFor={label} className={styles.label}>{label}</label>}
+        {required && <span className={styles.requiredBadge}>必須</span>}
+      </div>
       <input
+        className={styles.inputField}
         defaultValue={defaultValue && defaultValue}
         type={type}
         placeholder={placeholder && placeholder}
@@ -54,6 +57,7 @@ export const InputField: VFC<Props> = memo((props) => {
           minLength: minLength && minLength
         })}
       />
+      {guidance && <p className={styles.guidance}>{guidance}</p>}
     </div>
   );
 });

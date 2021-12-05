@@ -42,14 +42,17 @@ export const SignUpControlGroup: VFC = memo(() => {
           required
           inputValue={signUpInputValue.email}
           label="メールアドレス"
+          placeholder="メールアドレスを入力してください"
         />
 
         <InputField
           type="text"
-          required={true}
+          required
           inputValue={signUpInputValue.password}
           maxLength={6}
           label="パスワード"
+          guidance="※パスワードは最低6文字以上で入力してください"
+          placeholder="パスワードは最低6文字以上で入力してください"
         />
         {
           methods.formState.errors.password && methods.formState.errors.password.type === "required" &&

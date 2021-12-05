@@ -1,0 +1,84 @@
+.inputFieldContainer {
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+.labelAndRequiredBadge {
+
+  display: flex;
+  align-items: center;
+}
+
+.label {
+
+  font-size: 14px;
+}
+
+
+.requiredBadge {
+
+  font-size: 12px;
+  color: #C65151;
+  background: #ffe1e1;
+  border-radius: 5px;
+
+  margin-left: 10px;
+
+  padding: 3px 5px;
+}
+
+
+.inputField {
+
+  height: 45px;
+
+  background: #EDEDED;
+
+  border-style: solid;
+  border-color: #EDEDED;
+  border-width: 1px;
+
+  margin-top: 10px;
+
+
+  &::placeholder {
+
+    color: #ABB1BA;
+  }
+
+
+  &:hover {
+
+    opacity: 80%;
+  }
+
+
+  &:focus {
+
+    border-color: #7B828E;
+    box-shadow: 0 0 6px rgba(black, 0.16);
+  }
+
+
+  &:active {
+
+    border-color: #7B828E;
+    box-shadow: none;
+  }
+
+
+  &:disabled {
+
+    opacity: 25%;
+  }
+
+}
+
+
+.guidance {
+
+  font-size: 12px;
+  color: #5F5F5F;
+}
