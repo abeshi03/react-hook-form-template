@@ -1,56 +1,61 @@
-// - フレームワーク =======================================================================================================
-import React, {memo, VFC} from "react";
-import {SubmitHandler, useForm, FormProvider} from "react-hook-form";
-import {createUserWithEmailAndPassword} from "firebase/auth";
-import {auth} from "../../../../firebase";
+// - ライブラリー ========================================================================================================
+import React, { memo, VFC } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../../firebase";
+import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 
+// - 子コンポーネント =====================================================================================================
+import { InputField } from "../../../atoms/InputField/InputField";
 
-// - 子供コンポーネント ====================================================================================================
-import {InputField} from "../../../atoms/InputField/InputField";
-
-export type SignUpInputs = {
+// - inputState ========================================================================================================
+export type SignUpInputValues = {
   email: string,
   password: string,
 };
 
-const registerValue: SignUpInputs = {
+const signUpInputValue: SignUpInputValues = {
   email: "email",
   password: "password"
 }
+// - ===================================================================================================================
 
 
 /* eslint-disable-next-line react/display-name */
 export const SignUpControlGroup: VFC = memo(() => {
 
-  // const { register, handleSubmit, formState: { errors } } = useForm<SignUpInputs>();
-  const methods = useForm<SignUpInputs>();
+  const methods = useForm<SignUpInputValues>();
 
-  const onSubmit: SubmitHandler<SignUpInputs> = data => console.log(data);
-
-  // const onSubmit: SubmitHandler<SignUpInputs > = (data) => {
-  //   try {
-  //     createUserWithEmailAndPassword(auth, data.email, data.password).then(() => console.log("成功"));
-  //   } catch (error: unknown) {
-  //     console.log("失敗しました")
-  //   }
-  // }
+  const onSubmit: SubmitHandler<SignUpInputValues> = (data) => {
+    try {
+      createUserWithEmailAndPassword(auth, data.email, data.password).then(() => console.log("成功"));
+    } catch (error: unknown) {
+      console.log("失敗しました")
+    }
+  }
 
   return (
     <FormProvider { ...methods }>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
+
         <InputField
           type="text"
           required
-          name={registerValue.email}
+          inputValue={signUpInputValue.email}
+          label="メールアドレス"
         />
+
         <InputField
           type="text"
           required={true}
-          name={registerValue.password}
+          inputValue={signUpInputValue.password}
           maxLength={6}
+          label="パスワード"
         />
-        {methods.formState.errors.password && methods.formState.errors.password.type === "required" &&
-        <span>パスワードは必須です</span> }
+        {
+          methods.formState.errors.password && methods.formState.errors.password.type === "required" &&
+          <span>パスワードは必須です</span>}
+        {methods.formState.errors.password && methods.formState.errors.password.type === "maxLength" &&
+          <span>パスワードは最大10文字以内で入力してください</span> }
 
         <button type="submit">送信</button>
       </form>
