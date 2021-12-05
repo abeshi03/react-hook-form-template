@@ -10,6 +10,9 @@ import styles from "./SignUpControlGroup.module.scss";
 // - 子コンポーネント =====================================================================================================
 import { InputField } from "../../../atoms/InputField/InputField";
 
+// - バリデーション =======================================================================================================
+import { signUpValidations } from "../../../../config/validations/signUpValidations";
+
 
 // - inputState ========================================================================================================
 export type SignUpInputValues = {
@@ -28,14 +31,22 @@ const signUpInputValue: SignUpInputValues = {
 const emailErrorMessages = (error: FieldError) => {
   switch (error.type) {
     case "required": return <span className="errorMessage">メールアドレスは必須です</span>;
+    case "pattern": return <span className="errorMessage">不正なメールアドレスです。(正しい例: example@example.com)</span>;
   }
 }
 
 const passwordErrorMessages = (error: FieldError) => {
   switch (error.type) {
+
     case "required": return <span className="errorMessage">パスワードは必須です</span>;
-    case "minLength": return <span className="errorMessage">パスワードは6文字以上で入力してください</span>;
-    case "maxLength": return <span className="errorMessage">パスワードは10文字以内で入力してください</span>
+
+    case "minLength": return <span className="errorMessage">
+      {`パスワードは${signUpValidations.password.minLength}〜${signUpValidations.password.maxLength}文字で入力してください`}
+    </span>;
+
+    case "maxLength": return <span className="errorMessage">
+      {`パスワードは${signUpValidations.password.minLength}〜${signUpValidations.password.maxLength}文字で入力してください`}
+    </span>
   }
 }
 // - ===================================================================================================================
@@ -45,9 +56,9 @@ export const SignUpControlGroup: VFC = memo(() => {
 
   const methods = useForm<SignUpInputValues>();
 
-  const onSubmit: SubmitHandler<SignUpInputValues> = (data) => {
+  const onSubmit: SubmitHandler<SignUpInputValues> = (inputValue) => {
     try {
-      createUserWithEmailAndPassword(auth, data.email, data.password).then(() => console.log("成功"));
+      createUserWithEmailAndPassword(auth, inputValue.email, inputValue.password).then(() => console.log("成功"));
     } catch (error: unknown) {
       console.log("失敗しました")
     }
@@ -60,10 +71,11 @@ export const SignUpControlGroup: VFC = memo(() => {
         <div className={styles.inputContainer}>
           <InputField
             type="text"
-            required
+            required={signUpValidations.email.required}
             inputValue={signUpInputValue.email}
             label="メールアドレス"
             placeholder="メールアドレスを入力してください"
+            pattern={signUpValidations.email.regexp}
           />
           {methods.formState.errors.email && emailErrorMessages(methods.formState.errors.email)}
         </div>
@@ -71,10 +83,10 @@ export const SignUpControlGroup: VFC = memo(() => {
         <div className={styles.inputContainer}>
           <InputField
             type="text"
-            required
+            required={signUpValidations.password.required}
             inputValue={signUpInputValue.password}
-            minLength={6}
-            maxLength={10}
+            minLength={signUpValidations.password.minLength}
+            maxLength={signUpValidations.password.maxLength}
             label="パスワード"
             guidance="※パスワードは最低6文字以上で入力してください"
             placeholder="パスワードを入力してください"

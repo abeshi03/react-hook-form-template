@@ -1,6 +1,6 @@
 // - フレームワーク, ライブラリー ===========================================================================================
 import React, { memo, VFC } from "react";
-import { useFormContext } from "react-hook-form";
+import {useFormContext, ValidationRule} from "react-hook-form";
 
 
 // - アセット ============================================================================================================
@@ -19,6 +19,7 @@ type Props = {
   maxLength?: number;
   minLength?: number;
   defaultValue?: string;
+  pattern?: ValidationRule<RegExp>
 }
 
 /* eslint-disable-next-line react/display-name */
@@ -34,7 +35,8 @@ export const InputField: VFC<Props> = memo((props) => {
     inputValue,
     maxLength,
     minLength,
-    defaultValue
+    defaultValue,
+    pattern
   } = props;
 
   const { register } = useFormContext();
@@ -54,7 +56,8 @@ export const InputField: VFC<Props> = memo((props) => {
         {...register(`${inputValue}`, {
           required: required,
           maxLength: maxLength && maxLength,
-          minLength: minLength && minLength
+          minLength: minLength && minLength,
+          pattern: pattern && pattern
         })}
       />
       {guidance && <p className={styles.guidance}>{guidance}</p>}
