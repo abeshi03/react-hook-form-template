@@ -8,7 +8,9 @@ import { SignUp } from "./components/pages/SignUp/SignUp";
 const App: VFC = () => {
 
   return (
-    <SignUp/>
+    <>
+      <SignUp/>
+    </>
   );
 }
 
