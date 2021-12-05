@@ -8,6 +8,6 @@ export const signUpValidations = {
   password: {
     required: true,
     minLength: 6,
-    maxLength: 10
+    maxLength: 36
   }
 };

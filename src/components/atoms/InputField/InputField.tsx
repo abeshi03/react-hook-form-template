@@ -1,6 +1,6 @@
 // - フレームワーク, ライブラリー ===========================================================================================
 import React, { memo, VFC } from "react";
-import {useFormContext, ValidationRule} from "react-hook-form";
+import { useFormContext, ValidationRule } from "react-hook-form";
 
 
 // - アセット ============================================================================================================

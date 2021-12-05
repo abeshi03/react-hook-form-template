@@ -2,7 +2,7 @@
 import React, { memo, VFC } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
-import {SubmitHandler, useForm, FormProvider, FieldError} from "react-hook-form";
+import { SubmitHandler, useForm, FormProvider, FieldError } from "react-hook-form";
 
 // - アセット ===========================================================================================================
 import styles from "./SignUpControlGroup.module.scss";
@@ -51,6 +51,7 @@ const passwordErrorMessages = (error: FieldError) => {
 }
 // - ===================================================================================================================
 
+
 /* eslint-disable-next-line react/display-name */
 export const SignUpControlGroup: VFC = memo(() => {
 
@@ -82,7 +83,7 @@ export const SignUpControlGroup: VFC = memo(() => {
 
         <div className={styles.inputContainer}>
           <InputField
-            type="text"
+            type="password"
             required={signUpValidations.password.required}
             inputValue={signUpInputValue.password}
             minLength={signUpValidations.password.minLength}
