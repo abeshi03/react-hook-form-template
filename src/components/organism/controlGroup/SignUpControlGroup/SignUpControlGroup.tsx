@@ -7,6 +7,7 @@ import {SubmitHandler, useForm, FormProvider, FieldError} from "react-hook-form"
 // - 子コンポーネント =====================================================================================================
 import { InputField } from "../../../atoms/InputField/InputField";
 
+
 // - inputState ========================================================================================================
 export type SignUpInputValues = {
   email: string,
@@ -23,15 +24,15 @@ const signUpInputValue: SignUpInputValues = {
 // - エラーメッセージ =====================================================================================================
 const emailErrorMessages = (error: FieldError) => {
   switch (error.type) {
-    case "required": return <span>メールアドレスは必須です</span>;
+    case "required": return <span className="errorMessage">メールアドレスは必須です</span>;
   }
 }
 
 const passwordErrorMessages = (error: FieldError) => {
   switch (error.type) {
-    case "required": return <span>パスワードは必須です</span>;
-    case "minLength": return <span>パスワードは6文字以上で入力してください</span>;
-    case "maxLength": return <span>パスワードは10文字以内で入力してください</span>
+    case "required": return <span className="errorMessage">パスワードは必須です</span>;
+    case "minLength": return <span className="errorMessage">パスワードは6文字以上で入力してください</span>;
+    case "maxLength": return <span className="errorMessage">パスワードは10文字以内で入力してください</span>
   }
 }
 // - ===================================================================================================================
