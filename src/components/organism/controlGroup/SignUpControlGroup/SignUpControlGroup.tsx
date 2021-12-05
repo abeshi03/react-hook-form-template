@@ -2,7 +2,7 @@
 import React, { memo, VFC } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
-import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
+import {SubmitHandler, useForm, FormProvider, FieldError} from "react-hook-form";
 
 // - 子コンポーネント =====================================================================================================
 import { InputField } from "../../../atoms/InputField/InputField";
@@ -20,6 +20,22 @@ const signUpInputValue: SignUpInputValues = {
 // - ===================================================================================================================
 
 
+// - エラーメッセージ =====================================================================================================
+const emailErrorMessages = (error: FieldError) => {
+  switch (error.type) {
+    case "required": return <span>メールアドレスは必須です</span>;
+  }
+}
+
+const passwordErrorMessages = (error: FieldError) => {
+  switch (error.type) {
+    case "required": return <span>パスワードは必須です</span>;
+    case "minLength": return <span>パスワードは6文字以上で入力してください</span>;
+    case "maxLength": return <span>パスワードは10文字以内で入力してください</span>
+  }
+}
+// - ===================================================================================================================
+
 /* eslint-disable-next-line react/display-name */
 export const SignUpControlGroup: VFC = memo(() => {
 
@@ -36,7 +52,6 @@ export const SignUpControlGroup: VFC = memo(() => {
   return (
     <FormProvider { ...methods }>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-
         <InputField
           type="text"
           required
@@ -44,6 +59,7 @@ export const SignUpControlGroup: VFC = memo(() => {
           label="メールアドレス"
           placeholder="メールアドレスを入力してください"
         />
+        {methods.formState.errors.email && emailErrorMessages(methods.formState.errors.email)}
 
         <InputField
           type="text"
@@ -54,11 +70,7 @@ export const SignUpControlGroup: VFC = memo(() => {
           guidance="※パスワードは最低6文字以上で入力してください"
           placeholder="パスワードは最低6文字以上で入力してください"
         />
-        {
-          methods.formState.errors.password && methods.formState.errors.password.type === "required" &&
-          <span>パスワードは必須です</span>}
-        {methods.formState.errors.password && methods.formState.errors.password.type === "maxLength" &&
-          <span>パスワードは最大10文字以内で入力してください</span> }
+        {methods.formState.errors.password && passwordErrorMessages(methods.formState.errors.password)}
 
         <button type="submit">送信</button>
       </form>
