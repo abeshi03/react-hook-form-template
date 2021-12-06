@@ -73,7 +73,7 @@ export const SignUpControlGroup: VFC = memo(() => {
           <InputField
             type="text"
             required={signUpValidations.email.required}
-            inputValue={signUpInputValue.email}
+            name={signUpInputValue.email}
             label="メールアドレス"
             placeholder="メールアドレスを入力してください"
             pattern={signUpValidations.email.regexp}
@@ -85,7 +85,7 @@ export const SignUpControlGroup: VFC = memo(() => {
           <InputField
             type="password"
             required={signUpValidations.password.required}
-            inputValue={signUpInputValue.password}
+            name={signUpInputValue.password}
             minLength={signUpValidations.password.minLength}
             maxLength={signUpValidations.password.maxLength}
             label="パスワード"

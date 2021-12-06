@@ -15,11 +15,11 @@ type Props = {
   required: boolean;
   guidance?: string;
   disabled?: boolean;
-  inputValue: string;
+  name: string;
   maxLength?: number;
   minLength?: number;
   defaultValue?: string;
-  pattern?: ValidationRule<RegExp>
+  pattern?: ValidationRule<RegExp>;
 }
 
 /* eslint-disable-next-line react/display-name */
@@ -32,7 +32,7 @@ export const InputField: VFC<Props> = memo((props) => {
     required,
     guidance,
     disabled = false,
-    inputValue,
+    name,
     maxLength,
     minLength,
     defaultValue,
@@ -49,15 +49,15 @@ export const InputField: VFC<Props> = memo((props) => {
       </div>
       <input
         className={styles.inputField}
-        defaultValue={defaultValue && defaultValue}
+        defaultValue={defaultValue}
         type={type}
-        placeholder={placeholder && placeholder}
+        placeholder={placeholder}
         disabled={disabled}
-        {...register(`${inputValue}`, {
+        {...register(`${name}`, {
           required: required,
-          maxLength: maxLength && maxLength,
-          minLength: minLength && minLength,
-          pattern: pattern && pattern
+          maxLength: maxLength,
+          minLength: minLength,
+          pattern: pattern
         })}
       />
       {guidance && <p className={styles.guidance}>{guidance}</p>}
