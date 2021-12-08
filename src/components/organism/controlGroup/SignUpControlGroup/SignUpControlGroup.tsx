@@ -50,6 +50,7 @@ export const SignUpControlGroup: VFC = memo(() => {
             required: signUpValidations.email.required,
             pattern: signUpValidations.email.regexp
           })}
+          autoComplete="email"
         />
         {errors.email && emailErrorMessages(errors.email)}
       </div>
@@ -66,6 +67,7 @@ export const SignUpControlGroup: VFC = memo(() => {
             minLength: signUpValidations.password.minLength,
             maxLength: signUpValidations.password.maxLength
           })}
+          autoComplete="new-password"
         />
         {errors.password && passwordErrorMessages(errors.password)}
       </div>

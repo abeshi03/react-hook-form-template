@@ -15,6 +15,7 @@ type Props = {
   guidance?: string;
   disabled?: boolean;
   defaultValue?: string;
+  autoComplete?: string;
   inputProps: React.HTMLAttributes<HTMLInputElement>;
 }
 
@@ -29,6 +30,7 @@ export const InputField: VFC<Props> = memo((props) => {
     guidance,
     disabled = false,
     defaultValue,
+    autoComplete,
     inputProps
   } = props;
 
@@ -45,6 +47,7 @@ export const InputField: VFC<Props> = memo((props) => {
         type={type}
         placeholder={placeholder}
         disabled={disabled}
+        autoComplete={autoComplete}
       />
       {guidance && <p className={styles.guidance}>{guidance}</p>}
     </div>
