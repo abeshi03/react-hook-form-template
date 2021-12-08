@@ -2,7 +2,7 @@
 import React, { memo, VFC } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
-import { SubmitHandler, useForm, FormProvider, FieldError } from "react-hook-form";
+import { SubmitHandler, useForm, FieldError } from "react-hook-form";
 
 // - アセット ===========================================================================================================
 import styles from "./SignUpControlGroup.module.scss";
@@ -19,11 +19,6 @@ export type SignUpInputValues = {
   email: string,
   password: string,
 };
-
-const signUpInputValue: SignUpInputValues = {
-  email: "email",
-  password: "password"
-}
 // - ===================================================================================================================
 
 
@@ -55,7 +50,7 @@ const passwordErrorMessages = (error: FieldError) => {
 /* eslint-disable-next-line react/display-name */
 export const SignUpControlGroup: VFC = memo(() => {
 
-  const methods = useForm<SignUpInputValues>();
+  const { register, handleSubmit, formState: { errors } } = useForm<SignUpInputValues>();
 
   const onSubmit: SubmitHandler<SignUpInputValues> = (inputValue) => {
     try {
@@ -66,37 +61,39 @@ export const SignUpControlGroup: VFC = memo(() => {
   }
 
   return (
-    <FormProvider { ...methods }>
-      <form className={styles.signInControlGroup} onSubmit={methods.handleSubmit(onSubmit)}>
+    <form className={styles.signInControlGroup} onSubmit={handleSubmit(onSubmit)}>
 
-        <div className={styles.inputContainer}>
-          <InputField
-            type="text"
-            required={signUpValidations.email.required}
-            name={signUpInputValue.email}
-            label="メールアドレス"
-            placeholder="メールアドレスを入力してください"
-            pattern={signUpValidations.email.regexp}
-          />
-          {methods.formState.errors.email && emailErrorMessages(methods.formState.errors.email)}
-        </div>
+      <div className={styles.inputContainer}>
+        <InputField
+          type="text"
+          required={signUpValidations.email.required}
+          label="メールアドレス"
+          placeholder="メールアドレスを入力してください"
+          inputProps={register("email",{
+            required: signUpValidations.email.required,
+            pattern: signUpValidations.email.regexp
+          })}
+        />
+        {errors.email && emailErrorMessages(errors.email)}
+      </div>
 
-        <div className={styles.inputContainer}>
-          <InputField
-            type="password"
-            required={signUpValidations.password.required}
-            name={signUpInputValue.password}
-            minLength={signUpValidations.password.minLength}
-            maxLength={signUpValidations.password.maxLength}
-            label="パスワード"
-            guidance="※パスワードは最低6文字以上で入力してください"
-            placeholder="パスワードを入力してください"
-          />
-          {methods.formState.errors.password && passwordErrorMessages(methods.formState.errors.password)}
-        </div>
+      <div className={styles.inputContainer}>
+        <InputField
+          type="password"
+          required={signUpValidations.password.required}
+          label="パスワード"
+          guidance={`※パスワードは最低${signUpValidations.password.minLength}文字以上で入力してください`}
+          placeholder="パスワードを入力してください"
+          inputProps={register("password", {
+            required: signUpValidations.password.required,
+            minLength: signUpValidations.password.minLength,
+            maxLength: signUpValidations.password.maxLength
+          })}
+        />
+        {errors.password && passwordErrorMessages(errors.password)}
+      </div>
 
-        <button type="submit">送信</button>
-      </form>
-    </FormProvider>
+      <button type="submit">送信</button>
+    </form>
   );
 });
