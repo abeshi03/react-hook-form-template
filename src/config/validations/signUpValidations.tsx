@@ -33,11 +33,11 @@ export const passwordErrorMessages = (error: FieldError) => {
 
     case "minLength": return <span className="errorMessage">
       {`パスワードは${signUpValidations.password.minLength}〜${signUpValidations.password.maxLength}文字で入力してください`}
-  </span>;
+      </span>;
 
-  case "maxLength": return <span className="errorMessage">
-      {`パスワードは${signUpValidations.password.minLength}〜${signUpValidations.password.maxLength}文字で入力してください`}
-    </span>
+    case "maxLength": return <span className="errorMessage">
+        {`パスワードは${signUpValidations.password.minLength}〜${signUpValidations.password.maxLength}文字で入力してください`}
+      </span>
   }
 };
 // - ===================================================================================================================
