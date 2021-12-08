@@ -2,7 +2,7 @@
 import React, { memo, VFC } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
-import { SubmitHandler, useForm, FieldError } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 // - アセット ===========================================================================================================
 import styles from "./SignUpControlGroup.module.scss";
@@ -12,6 +12,8 @@ import { InputField } from "../../../atoms/InputField/InputField";
 
 // - バリデーション =======================================================================================================
 import { signUpValidations } from "../../../../config/validations/signUpValidations";
+import { emailErrorMessages } from "../../../../config/validations/signUpValidations";
+import { passwordErrorMessages } from "../../../../config/validations/signUpValidations";
 
 
 // - inputState ========================================================================================================
@@ -19,31 +21,6 @@ export type SignUpInputValues = {
   email: string,
   password: string,
 };
-// - ===================================================================================================================
-
-
-// - エラーメッセージ =====================================================================================================
-const emailErrorMessages = (error: FieldError) => {
-  switch (error.type) {
-    case "required": return <span className="errorMessage">メールアドレスは必須です</span>;
-    case "pattern": return <span className="errorMessage">不正なメールアドレスです。(正しい例: example@example.com)</span>;
-  }
-}
-
-const passwordErrorMessages = (error: FieldError) => {
-  switch (error.type) {
-
-    case "required": return <span className="errorMessage">パスワードは必須です</span>;
-
-    case "minLength": return <span className="errorMessage">
-      {`パスワードは${signUpValidations.password.minLength}〜${signUpValidations.password.maxLength}文字で入力してください`}
-    </span>;
-
-    case "maxLength": return <span className="errorMessage">
-      {`パスワードは${signUpValidations.password.minLength}〜${signUpValidations.password.maxLength}文字で入力してください`}
-    </span>
-  }
-}
 // - ===================================================================================================================
 
 
