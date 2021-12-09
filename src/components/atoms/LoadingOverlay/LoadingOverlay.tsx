@@ -7,11 +7,17 @@ import styles from "./LoadingOverlay.module.scss";
 // - ルーティング =========================================================================================================
 
 /* eslint-disable-next-line react/display-name */
-export const LoadingOverlay: VFC = memo((props) => {
+export const LoadingOverlay: VFC = memo(() => {
+
+  const isLoading: boolean = false;
 
   return (
-    <div className={styles.loadingOverlay}>
-      <div className={styles.loadingOverlay__loadingIndicator}></div>
-    </div>
+    <>
+      { isLoading &&
+        <div className={styles.loadingOverlay}>
+          <div className={styles.loadingOverlay__loadingIndicator}></div>
+        </div>
+      }
+    </>
   );
 });
