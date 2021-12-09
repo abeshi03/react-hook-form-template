@@ -1,5 +1,5 @@
 // - ライブラリー ========================================================================================================
-import React, { memo, VFC } from "react";
+import React, { memo, VFC, useContext } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -15,11 +15,10 @@ import { signUpValidations } from "../../../../config/validations/signUpValidati
 import { emailErrorMessages } from "../../../../config/validations/signUpValidations";
 import { passwordErrorMessages } from "../../../../config/validations/signUpValidations";
 
-
 // - inputState ========================================================================================================
 export type SignUpInputValues = {
   email: string,
-  password: string,
+  password: string
 };
 // - ===================================================================================================================
 
@@ -30,12 +29,14 @@ export const SignUpControlGroup: VFC = memo(() => {
   const { register, handleSubmit, formState: { errors } } = useForm<SignUpInputValues>();
 
   const onSubmit: SubmitHandler<SignUpInputValues> = (inputValue) => {
+
     try {
       createUserWithEmailAndPassword(auth, inputValue.email, inputValue.password).then(() => console.log("成功"));
     } catch (error: unknown) {
       console.log("失敗しました")
     }
   }
+
 
   return (
     <form className={styles.signInControlGroup} onSubmit={handleSubmit(onSubmit)}>

@@ -1,19 +1,20 @@
 // - フレームワーク =======================================================================================================
-import React, { memo, VFC } from "react";
+import React, { memo, useContext, VFC } from "react";
 
 // - アセット ============================================================================================================
 import styles from "./LoadingOverlay.module.scss";
 
-// - ルーティング =========================================================================================================
+// - グローバルstate =====================================================================================================
+import { LoadingOverlayContext, LoadingOverlayContextType } from "../../../providers/LoadingOverlayProvider ";
 
 /* eslint-disable-next-line react/display-name */
 export const LoadingOverlay: VFC = memo(() => {
 
-  const isLoading: boolean = false;
+  const { displayLoadingOverlay } = useContext<LoadingOverlayContextType>(LoadingOverlayContext)
 
   return (
     <>
-      { isLoading &&
+      { displayLoadingOverlay &&
         <div className={styles.loadingOverlay}>
           <div className={styles.loadingOverlay__loadingIndicator}></div>
         </div>
