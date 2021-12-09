@@ -15,6 +15,9 @@ import { signUpValidations } from "../../../../config/validations/signUpValidati
 import { emailErrorMessages } from "../../../../config/validations/signUpValidations";
 import { passwordErrorMessages } from "../../../../config/validations/signUpValidations";
 
+// - グローバルstate =======================================================================================================
+import { LoadingOverlayContext, LoadingOverlayContextType } from "../../../../providers/LoadingOverlayProvider ";
+
 // - inputState ========================================================================================================
 export type SignUpInputValues = {
   email: string,
@@ -28,13 +31,16 @@ export const SignUpControlGroup: VFC = memo(() => {
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignUpInputValues>();
 
+  const { setDisplayLoadingOverlay } = useContext<LoadingOverlayContextType>(LoadingOverlayContext);
+
   const onSubmit: SubmitHandler<SignUpInputValues> = (inputValue) => {
 
-    try {
-      createUserWithEmailAndPassword(auth, inputValue.email, inputValue.password).then(() => console.log("成功"));
-    } catch (error: unknown) {
-      console.log("失敗しました")
-    }
+    setDisplayLoadingOverlay(true);
+
+    createUserWithEmailAndPassword(auth, inputValue.email, inputValue.password)
+      .then(() => console.log("成功"))
+      .catch((error) => console.log(error))
+      .finally(() => setDisplayLoadingOverlay(false))
   }
 
 
