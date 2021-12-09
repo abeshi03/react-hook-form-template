@@ -1,0 +1,53 @@
+.loadingOverlay {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(black, 0.5);
+  cursor: not-allowed;
+
+
+  &__loadingIndicator,
+  &__loadingIndicator:after {
+
+    width: 64px;
+    height: 64px;
+
+    border-radius: 50%;
+  }
+
+
+  &__loadingIndicator {
+
+    $BACKGROUND_COLOR: white;
+    $ACCENT_COLOR: #51c678;
+
+    font-size: 7px;
+    border-top: 1.1em solid $ACCENT_COLOR;
+    border-right: 1.1em solid $ACCENT_COLOR;
+    border-bottom: 1.1em solid $ACCENT_COLOR;
+    border-left: 1.1em solid $BACKGROUND_COLOR;
+    animation: LoadingOverlayAnimation 1.1s infinite linear;
+  }
+
+
+  @keyframes LoadingOverlayAnimation {
+
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
