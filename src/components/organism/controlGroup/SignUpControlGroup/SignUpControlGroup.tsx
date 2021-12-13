@@ -1,5 +1,5 @@
 // - ライブラリー ========================================================================================================
-import React, { memo, VFC, useContext } from "react";
+import React, {memo, VFC, useContext, useState} from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -33,14 +33,20 @@ export const SignUpControlGroup: VFC = memo(() => {
 
   const { setDisplayLoadingOverlay } = useContext<LoadingOverlayContextType>(LoadingOverlayContext);
 
+  const [ isDisabled, setIsDisabled ] = useState(false);
+
   const onSubmit: SubmitHandler<SignUpInputValues> = (inputValue) => {
 
+    setIsDisabled(true);
     setDisplayLoadingOverlay(true);
 
     createUserWithEmailAndPassword(auth, inputValue.email, inputValue.password)
       .then(() => console.log("成功"))
       .catch((error) => console.log(error))
-      .finally(() => setDisplayLoadingOverlay(false))
+      .finally(() => {
+        setIsDisabled(false);
+        setDisplayLoadingOverlay(false);
+      })
   }
 
 
@@ -79,7 +85,7 @@ export const SignUpControlGroup: VFC = memo(() => {
         {errors.password && passwordErrorMessages(errors.password)}
       </div>
 
-      <button type="submit">送信</button>
+      <button type="submit" disabled={isDisabled}>送信</button>
     </form>
   );
 });
