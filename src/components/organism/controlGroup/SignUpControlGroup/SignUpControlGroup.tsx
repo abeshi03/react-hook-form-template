@@ -30,19 +30,19 @@ export const SignUpControlGroup: VFC = memo(() => {
   const { register, handleSubmit, formState: { errors } } = useForm<SignUpInputValues>();
 
   const [ isDisabled, setIsDisabled ] = useState(false);
-  const [ isLoadingOverlay, setIsLoadingOverlay ] = useState(false);
+  const [ isDisplayLoadingOverlay, setIsDisplayLoadingOverlay ] = useState(false);
 
   const onSubmit: SubmitHandler<SignUpInputValues> = (inputValue) => {
 
     setIsDisabled(true);
-    setIsLoadingOverlay(true);
+    setIsDisplayLoadingOverlay(true);
 
     createUserWithEmailAndPassword(auth, inputValue.email, inputValue.password)
       .then(() => console.log("成功"))
       .catch((error) => console.log(error))
       .finally(() => {
         setIsDisabled(false);
-        setIsLoadingOverlay(false);
+        setIsDisplayLoadingOverlay(false);
       })
   }
 
@@ -87,7 +87,7 @@ export const SignUpControlGroup: VFC = memo(() => {
 
       </form>
 
-      <LoadingOverlay isLoadingOverlay={isLoadingOverlay}/>
+      { isDisplayLoadingOverlay && <LoadingOverlay /> }
     </>
   );
 });
