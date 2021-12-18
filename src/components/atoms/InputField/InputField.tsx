@@ -19,7 +19,7 @@ type Props = {
   inputProps: React.HTMLAttributes<HTMLInputElement>;
 }
 
-/* eslint-disable-next-line react/display-name */
+
 export const InputField: VFC<Props> = memo((props) => {
 
   const {

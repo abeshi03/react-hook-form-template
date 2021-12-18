@@ -24,7 +24,6 @@ export type SignUpInputValues = {
 // - ===================================================================================================================
 
 
-/* eslint-disable-next-line react/display-name */
 export const SignUpControlGroup: VFC = memo(() => {
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignUpInputValues>();
@@ -91,4 +90,3 @@ export const SignUpControlGroup: VFC = memo(() => {
     </>
   );
 });
-
