@@ -1,5 +1,5 @@
 // - フレームワーク =======================================================================================================
-import React, { memo, VFC} from "react";
+import React, { memo, VFC } from "react";
 
 // - アセット ===========================================================================================================
 import styles from "./SignUp.module.scss";
@@ -7,7 +7,7 @@ import styles from "./SignUp.module.scss";
 // - 子コンポーネント =====================================================================================================
 import { SignUpControlGroup } from "../../organism/controlGroup/SignUpControlGroup/SignUpControlGroup";
 
-/* eslint-disable-next-line react/display-name */
+
 export const SignUp: VFC = memo(() => {
 
   return (
