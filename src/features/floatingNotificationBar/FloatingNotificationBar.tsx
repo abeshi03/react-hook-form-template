@@ -1,5 +1,5 @@
 // - ライブラリー ========================================================================================================
-import React, { memo, VFC } from "react";
+import React, { memo, useEffect, VFC } from "react";
 
 // - アセット ============================================================================================================
 import styles from "./FloatingNotificationBar.module.scss";
@@ -41,6 +41,12 @@ export const FloatingNotificationBar: VFC = memo(() => {
 
   const state = useSelector((state: RootState) => state.floatingNotificationBar);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(hiddenFloatingNotificationBar());
+    }, 3000)
+  }, [ dispatch, state.isDisplay ])
 
   return (
     <>
