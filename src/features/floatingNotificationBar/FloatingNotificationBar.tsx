@@ -3,13 +3,13 @@ import React, { memo, VFC } from "react";
 
 // - アセット ============================================================================================================
 import styles from "./FloatingNotificationBar.module.scss";
-import { ErrorIcon } from "../../../assets/icons/ErrorIcon";
-import { InfoIcon } from "../../../assets/icons/InfoIcon";
-import { WarningIcon } from "../../../assets/icons/WarningIcon";
-import { SuccessIcon } from "../../../assets/icons/SuccessIcon";
+import { ErrorIcon } from "../../assets/icons/ErrorIcon";
+import { InfoIcon } from "../../assets/icons/InfoIcon";
+import { WarningIcon } from "../../assets/icons/WarningIcon";
+import { SuccessIcon } from "../../assets/icons/SuccessIcon";
 
 // - 型定義 =============================================================================================================
-import { AlertType } from "../../../features/floatingNotificationBar/floatingNotificationBarSlice";
+import { AlertType } from "./floatingNotificationBarSlice";
 
 
 type Props = {
