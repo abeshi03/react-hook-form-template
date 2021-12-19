@@ -1,5 +1,8 @@
 // - フレームワーク =======================================================================================================
 import React, { VFC } from 'react';
+
+// - ルーティング ========================================================================================================
+import { Routing } from "./router/routing";
 import { Link } from "react-router-dom";
 
 const App: VFC = () => {
@@ -7,7 +10,7 @@ const App: VFC = () => {
   return (
     <>
       <div>トップページです</div>
-      <Link to="/sign_up">会員登録</Link>
+      <Link to={Routing.signUp.path}>会員登録</Link>
     </>
   );
 }
