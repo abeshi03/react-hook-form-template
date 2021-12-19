@@ -9,7 +9,7 @@ export type FloatingNotificationBarState = {
 }
 
 export const initialState: FloatingNotificationBarState = {
-  isDisplay: false,
+  isDisplay: true,
   message: "",
   type: "ERROR"
 }

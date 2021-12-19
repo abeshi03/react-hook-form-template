@@ -8,10 +8,12 @@ import { SignUp } from "./components/pages/SignUp/SignUp";
 import { Routing } from "./router/routing";
 import { store } from "./store";
 import { Provider } from "react-redux";
+import { FloatingNotificationBar } from "./features/floatingNotificationBar/FloatingNotificationBar";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <FloatingNotificationBar/>
       <BrowserRouter>
         <Routes>
           <Route path={Routing.top.path} element={<App />}/>

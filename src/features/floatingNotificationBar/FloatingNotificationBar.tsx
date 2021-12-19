@@ -1,4 +1,4 @@
-// - フレームワーク =======================================================================================================
+// - ライブラリー ========================================================================================================
 import React, { memo, VFC } from "react";
 
 // - アセット ============================================================================================================
@@ -11,12 +11,10 @@ import { SuccessIcon } from "../../assets/icons/SuccessIcon";
 // - 型定義 =============================================================================================================
 import { AlertType } from "./floatingNotificationBarSlice";
 
+// - グローバルstate =====================================================================================================
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
 
-type Props = {
-  type: AlertType;
-  message: string;
-  closeFunction?: () => void;
-}
 
 const variationModifierCSS_Class = (type: AlertType): string => {
   switch (type) {
@@ -38,22 +36,24 @@ const getIcon = (type: AlertType): JSX.Element => {
 }
 
 
-export const FloatingNotificationBar: VFC<Props> = memo((props) => {
-  const { type, message, closeFunction } = props;
+export const FloatingNotificationBar: VFC = memo(() => {
+
+  const state = useSelector((state: RootState) => state.floatingNotificationBar);
 
   return (
     <>
-      <div className={`${styles.floatingNotificationBar} ${variationModifierCSS_Class(type)}`}>
-        <div className={styles.icon}>
-          { getIcon(type) }
+      {state.isDisplay &&
+        <div className={`${styles.floatingNotificationBar} ${variationModifierCSS_Class(state.type)}`}>
+          <div className={styles.icon}>
+            { getIcon(state.type) }
+          </div>
+          <p className={styles.message}>{ state.message }</p>
+          <div
+            className={styles.closeButton}
+            role="button"
+          >{'×'}</div>
         </div>
-        <p className={styles.message}>{ message }</p>
-        <div
-          className={styles.closeButton}
-          role="button"
-          onClick={closeFunction}
-        >{'×'}</div>
-      </div>
+      }
     </>
   );
 });
