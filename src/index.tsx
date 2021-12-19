@@ -6,15 +6,19 @@ import App from './App';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { SignUp } from "./components/pages/SignUp/SignUp";
 import { Routing } from "./router/routing";
+import { store } from "./store";
+import { Provider } from "react-redux";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path={Routing.top.path} element={<App />}/>
-        <Route path={Routing.signUp.path} element={<SignUp/>}/>
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path={Routing.top.path} element={<App />}/>
+          <Route path={Routing.signUp.path} element={<SignUp/>}/>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

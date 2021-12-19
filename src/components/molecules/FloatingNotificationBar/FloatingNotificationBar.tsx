@@ -8,9 +8,9 @@ import { InfoIcon } from "../../../assets/icons/InfoIcon";
 import { WarningIcon } from "../../../assets/icons/WarningIcon";
 import { SuccessIcon } from "../../../assets/icons/SuccessIcon";
 
-// - ルーティング =========================================================================================================
+// - 型定義 =============================================================================================================
+import { AlertType } from "../../../features/floatingNotificationBar/floatingNotificationBarSlice";
 
-type AlertType = "SUCCESS" | "ERROR" | "WARNING" | "INFO"
 
 type Props = {
   type: AlertType;
