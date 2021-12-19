@@ -15,6 +15,7 @@ type AlertType = "SUCCESS" | "ERROR" | "WARNING" | "INFO"
 type Props = {
   type: AlertType;
   message: string;
+  closeFunction?: () => void;
 }
 
 const variationModifierCSS_Class = (type: AlertType): string => {
@@ -38,15 +39,21 @@ const getIcon = (type: AlertType): JSX.Element => {
 
 
 export const FloatingNotificationBar: VFC<Props> = memo((props) => {
-  const { type, message } = props;
+  const { type, message, closeFunction } = props;
 
   return (
-    <div className={`${styles.floatingNotificationBar} ${variationModifierCSS_Class(type)}`}>
-      <div className={styles.icon}>
-        { getIcon(type) }
+    <>
+      <div className={`${styles.floatingNotificationBar} ${variationModifierCSS_Class(type)}`}>
+        <div className={styles.icon}>
+          { getIcon(type) }
+        </div>
+        <p className={styles.message}>{ message }</p>
+        <div
+          className={styles.closeButton}
+          role="button"
+          onClick={closeFunction}
+        >{'×'}</div>
       </div>
-      <p className={styles.message}>{ message }</p>
-      <div className={styles.closeButton} role="button">{'×'}</div>
-    </div>
+    </>
   );
 });

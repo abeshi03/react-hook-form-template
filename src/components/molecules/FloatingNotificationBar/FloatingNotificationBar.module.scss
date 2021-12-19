@@ -3,8 +3,8 @@
   $WIDTH: 280px;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   width: $WIDTH;
   padding: 16px 22px;
@@ -13,12 +13,16 @@
   box-shadow: 0 2px 8px 0 rgba(black, 0.25);
 
   position: fixed;
-  top: 96px;
-  left: 400px;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1;
 
 
   .message {
+
+    flex-grow: 1;
+    margin-left: 12px;
 
     font-size: 13px;
     font-weight: bold;
@@ -28,11 +32,15 @@
 
   .icon {
 
+    flex-shrink: 0;
+
     width: 24px;
   }
 
 
   .closeButton {
+
+    margin-bottom: 10px;
 
     font-size: 28px;
 
