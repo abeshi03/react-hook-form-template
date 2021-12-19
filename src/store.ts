@@ -1,7 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 
+// - reducer ===========================================================================================================
+import floatingNotificationBarReducer from "../src/features/floatingNotificationBar/floatingNotificationBarSlice";
+
+
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    floatingNotificationBar: floatingNotificationBarReducer
+  },
 })
 
 
