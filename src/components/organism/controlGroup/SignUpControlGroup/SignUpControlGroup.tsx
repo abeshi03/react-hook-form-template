@@ -43,7 +43,7 @@ export const SignUpControlGroup: VFC = memo(() => {
   const dispatch = useDispatch();
 
 
-  const onSubmit: SubmitHandler<SignUpInputValues> = (inputValue) => {
+  const signUp: SubmitHandler<SignUpInputValues> = (inputValue) => {
 
     setIsDisabled(true);
     setIsDisplayLoadingOverlay(true);
@@ -74,7 +74,7 @@ export const SignUpControlGroup: VFC = memo(() => {
 
   return (
     <>
-      <form className={styles.signInControlGroup} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.signInControlGroup} onSubmit={handleSubmit(signUp)}>
 
         <div className={styles.inputContainer}>
           <InputField

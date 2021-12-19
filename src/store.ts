@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 
 // - reducer ===========================================================================================================
 import floatingNotificationBarReducer from "../src/features/floatingNotificationBar/floatingNotificationBarSlice";
+import userReducer from "../src/features/userSlice";
 
 
 export const store = configureStore({
   reducer: {
-    floatingNotificationBar: floatingNotificationBarReducer
+    floatingNotificationBar: floatingNotificationBarReducer,
+    user: userReducer
   },
 })
 
