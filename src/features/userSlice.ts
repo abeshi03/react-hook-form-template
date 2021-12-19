@@ -7,7 +7,7 @@ export type User = {
 }
 
 const initialState: User = {
-  uid: "",
+  uid:  "",
   name: "",
   email: ""
 }
@@ -17,11 +17,6 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    logout: (user) => {
-      user.uid = "";
-      user.name = "";
-      user.email = "";
-    },
     updateUser: (user, action: PayloadAction<User>) => {
       user.uid = action.payload.uid;
       user.name = action.payload.name;
@@ -30,6 +25,6 @@ export const userSlice = createSlice({
   }
 })
 
-export const { updateUser, logout } = userSlice.actions;
+export const { updateUser } = userSlice.actions;
 
 export default userSlice.reducer;
