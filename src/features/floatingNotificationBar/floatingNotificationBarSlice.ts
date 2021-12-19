@@ -9,7 +9,7 @@ export type FloatingNotificationBarState = {
 }
 
 export const initialState: FloatingNotificationBarState = {
-  isDisplay: true,
+  isDisplay: false,
   message: "",
   type: "ERROR"
 }
@@ -22,11 +22,6 @@ export const floatingNotificationBarSlice = createSlice({
       state.isDisplay = action.payload.isDisplay;
       state.type = action.payload.type;
       state.message = action.payload.message;
-
-      // - 5秒後にFloatingNotificationBarを非表示にする
-      setTimeout(() => {
-        state.isDisplay = false;
-      }, 5000)
     },
     hiddenFloatingNotificationBar: (state) => {
       state.isDisplay = false;

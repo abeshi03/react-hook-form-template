@@ -4,6 +4,10 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+// - グローバルstate =====================================================================================================
+import { useDispatch } from "react-redux";
+import { displayFloatingNotificationBar } from "../../../../features/floatingNotificationBar/floatingNotificationBarSlice";
+
 // - ルーティング ========================================================================================================
 import { useNavigate } from "react-router-dom";
 
@@ -35,7 +39,9 @@ export const SignUpControlGroup: VFC = memo(() => {
   const [ isDisabled, setIsDisabled ] = useState(false);
   const [ isDisplayLoadingOverlay, setIsDisplayLoadingOverlay ] = useState(false);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const onSubmit: SubmitHandler<SignUpInputValues> = (inputValue) => {
 
@@ -45,8 +51,20 @@ export const SignUpControlGroup: VFC = memo(() => {
     createUserWithEmailAndPassword(auth, inputValue.email, inputValue.password)
       .then(() => {
         navigate(Routing.top.path);
+        dispatch(displayFloatingNotificationBar({
+          isDisplay: true,
+          type: "SUCCESS",
+          message: "会員登録が完了いたしました！"
+        }))
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error);
+        dispatch(displayFloatingNotificationBar({
+          isDisplay: true,
+          type: "ERROR",
+          message: "新規会員登録に失敗いたしました。"
+        }))
+      })
       .finally(() => {
         setIsDisabled(false);
         setIsDisplayLoadingOverlay(false);

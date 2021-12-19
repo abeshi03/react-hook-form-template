@@ -13,7 +13,8 @@ import { AlertType } from "./floatingNotificationBarSlice";
 
 // - グローバルstate =====================================================================================================
 import { RootState } from "../../store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { hiddenFloatingNotificationBar } from "./floatingNotificationBarSlice";
 
 
 const variationModifierCSS_Class = (type: AlertType): string => {
@@ -39,6 +40,7 @@ const getIcon = (type: AlertType): JSX.Element => {
 export const FloatingNotificationBar: VFC = memo(() => {
 
   const state = useSelector((state: RootState) => state.floatingNotificationBar);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -51,6 +53,7 @@ export const FloatingNotificationBar: VFC = memo(() => {
           <div
             className={styles.closeButton}
             role="button"
+            onClick={() => dispatch(hiddenFloatingNotificationBar())}
           >{'×'}</div>
         </div>
       }
