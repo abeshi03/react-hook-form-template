@@ -1,8 +1,10 @@
 export const Routing = {
   top: {
-    path: "/"
+    path: "/",
+    pageName: "トップ"
   },
   signUp: {
-    path: "/sign_up"
+    path: "/sign_up",
+    pageName: "新規会員登録"
   }
 }

@@ -4,13 +4,16 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+// - ルーティング ========================================================================================================
+import { useNavigate } from "react-router-dom";
+
 // - アセット ===========================================================================================================
+import { Routing } from "../../../../router/routing";
 import styles from "./SignUpControlGroup.module.scss";
 
 // - 子コンポーネント =====================================================================================================
 import { InputField } from "../../../atoms/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
-import { FloatingNotificationBar } from "../../../molecules/FloatingNotificationBar/FloatingNotificationBar";
 
 // - バリデーション =======================================================================================================
 import { signUpValidations } from "../../../../config/validations/signUpValidations";
@@ -31,7 +34,8 @@ export const SignUpControlGroup: VFC = memo(() => {
 
   const [ isDisabled, setIsDisabled ] = useState(false);
   const [ isDisplayLoadingOverlay, setIsDisplayLoadingOverlay ] = useState(false);
-  const [ isDisplayFlashMessage, setIsDisplayFlashMessage ] = useState(false);
+
+  let navigate = useNavigate();
 
   const onSubmit: SubmitHandler<SignUpInputValues> = (inputValue) => {
 
@@ -39,16 +43,14 @@ export const SignUpControlGroup: VFC = memo(() => {
     setIsDisplayLoadingOverlay(true);
 
     createUserWithEmailAndPassword(auth, inputValue.email, inputValue.password)
-      .then(() => setIsDisplayFlashMessage(true))
+      .then(() => {
+        navigate(Routing.top.path);
+      })
       .catch((error) => console.log(error))
       .finally(() => {
         setIsDisabled(false);
         setIsDisplayLoadingOverlay(false);
       })
-  }
-
-  const hiddenFlashMessage = (): void => {
-    setIsDisplayFlashMessage(false);
   }
 
 
@@ -93,7 +95,6 @@ export const SignUpControlGroup: VFC = memo(() => {
       </form>
 
       { isDisplayLoadingOverlay && <LoadingOverlay /> }
-      { isDisplayFlashMessage && <FloatingNotificationBar type="SUCCESS" message="ログインに成功しました！" closeFunction={hiddenFlashMessage} /> }
     </>
   );
 });
