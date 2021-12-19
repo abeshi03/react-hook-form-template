@@ -43,6 +43,7 @@ export const FloatingNotificationBar: VFC = memo(() => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // - 3秒後に非表示にする
     setTimeout(() => {
       dispatch(hiddenFloatingNotificationBar());
     }, 3000)

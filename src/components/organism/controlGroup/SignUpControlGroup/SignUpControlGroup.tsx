@@ -58,11 +58,11 @@ export const SignUpControlGroup: VFC = memo(() => {
         }))
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error.code, error.message);
         dispatch(displayFloatingNotificationBar({
           isDisplay: true,
           type: "ERROR",
-          message: "新規会員登録に失敗いたしました。"
+          message: "登録されているメールアドレスです"
         }))
       })
       .finally(() => {
