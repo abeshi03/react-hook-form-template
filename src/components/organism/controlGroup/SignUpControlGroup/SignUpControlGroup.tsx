@@ -1,13 +1,12 @@
 // - ライブラリー ========================================================================================================
 import React, { memo, VFC, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 // - グローバルstate =====================================================================================================
 import { useDispatch } from "react-redux";
 import { displayFloatingNotificationBar } from "../../../../features/floatingNotificationBar/floatingNotificationBarSlice";
-import { updateUser } from "../../../../features/userSlice";
 
 // - ルーティング ========================================================================================================
 import { useNavigate } from "react-router-dom";
