@@ -1,19 +1,19 @@
 // - ライブラリー ========================================================================================================
-import React, { memo, VFC, useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../../firebase";
+import React, { memo, useState, VFC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { auth } from "../../../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+// - ルーティング ========================================================================================================
+import { Routing } from "../../../../router/routing";
+import { useNavigate } from "react-router-dom";
 
 // - グローバルstate =====================================================================================================
 import { useDispatch } from "react-redux";
 import { displayFloatingNotificationBar } from "../../../../features/floatingNotificationBar/floatingNotificationBarSlice";
 
-// - ルーティング ========================================================================================================
-import { useNavigate } from "react-router-dom";
-import { Routing } from "../../../../router/routing";
-
-// - アセット ===========================================================================================================
-import styles from "./SignUpControlGroup.module.scss";
+// - アセット ============================================================================================================
+import styles from "./SignInControlGroup.module.scss";
 
 // - 子コンポーネント =====================================================================================================
 import { InputField } from "../../../atoms/InputField/InputField";
@@ -21,22 +21,22 @@ import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
 
 // - バリデーション =======================================================================================================
 import {
-  userValidations,
   emailErrorMessages,
-  passwordErrorMessages
+  passwordErrorMessages,
+  userValidations
 } from "../../../../config/validations/userValidations";
 
 // - inputState ========================================================================================================
-export type SignUpInputValues = {
+export type SignInInputValues = {
   email: string,
   password: string
 };
 // - ===================================================================================================================
 
 
-export const SignUpControlGroup: VFC = memo(() => {
+export const SignInControlGroup: VFC = memo(() => {
 
-  const { register, handleSubmit, formState: { errors } } = useForm<SignUpInputValues>();
+  const { register, handleSubmit, formState: { errors } } = useForm<SignInInputValues>();
 
   const [ isDisabled, setIsDisabled ] = useState(false);
   const [ isDisplayLoadingOverlay, setIsDisplayLoadingOverlay ] = useState(false);
@@ -45,29 +45,29 @@ export const SignUpControlGroup: VFC = memo(() => {
   const dispatch = useDispatch();
 
 
-  const signUp: SubmitHandler<SignUpInputValues> = (inputValue) => {
+  const signIn: SubmitHandler<SignInInputValues> = (inputValue): void => {
 
     setIsDisabled(true);
     setIsDisplayLoadingOverlay(true);
 
-    createUserWithEmailAndPassword(auth, inputValue.email, inputValue.password)
+    signInWithEmailAndPassword(auth, inputValue.email, inputValue.password)
       .then(() => {
         navigate(Routing.top.path);
         dispatch(displayFloatingNotificationBar({
           notification: {
             type: "SUCCESS",
-            message: "会員登録が完了いたしました！"
+            message: "ログインしました！"
           }
-        }))
+        }));
       })
-      .catch((error) => {
-        console.error(error.code, error.message);
+      .catch((error: unknown) => {
+        console.log(error);
         dispatch(displayFloatingNotificationBar({
           notification: {
             type: "ERROR",
-            message: "登録されているメールアドレスです"
+            message: "ログインに失敗いたしました。メールアドレス、パスワードをご確認ください。"
           }
-        }))
+        }));
       })
       .finally(() => {
         setIsDisabled(false);
@@ -75,10 +75,9 @@ export const SignUpControlGroup: VFC = memo(() => {
       })
   }
 
-
   return (
     <>
-      <form className={styles.signInControlGroup} onSubmit={handleSubmit(signUp)}>
+      <form className={styles.signInControlGroup} onSubmit={handleSubmit(signIn)}>
 
         <div className={styles.inputContainer}>
           <InputField
@@ -112,11 +111,10 @@ export const SignUpControlGroup: VFC = memo(() => {
           {errors.password && passwordErrorMessages(errors.password)}
         </div>
 
-        <button type="submit" disabled={isDisabled}>送信</button>
-
+        <button type="submit" disabled={isDisabled}>ログイン</button>
       </form>
 
-      { isDisplayLoadingOverlay && <LoadingOverlay /> }
+      { isDisplayLoadingOverlay && <LoadingOverlay/> }
     </>
   );
 });
