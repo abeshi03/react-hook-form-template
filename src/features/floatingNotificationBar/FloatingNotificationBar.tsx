@@ -52,16 +52,16 @@ export const FloatingNotificationBar: VFC = memo(() => {
       clearTimeout(hiddenTimer);
     }
 
-  }, [ dispatch, state.isDisplay ])
+  }, [ dispatch, state.notification ])
 
   return (
     <>
-      {state.isDisplay &&
-        <div className={`${styles.floatingNotificationBar} ${variationModifierCSS_Class(state.type)}`}>
+      {state.notification &&
+        <div className={`${styles.floatingNotificationBar} ${variationModifierCSS_Class(state.notification.type)}`}>
           <div className={styles.icon}>
-            { getIcon(state.type) }
+            { getIcon(state.notification.type) }
           </div>
-          <p className={styles.message}>{ state.message }</p>
+          <p className={styles.message}>{ state.notification.message }</p>
           <div
             className={styles.closeButton}
             role="button"

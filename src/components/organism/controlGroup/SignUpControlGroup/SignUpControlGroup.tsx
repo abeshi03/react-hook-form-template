@@ -52,17 +52,19 @@ export const SignUpControlGroup: VFC = memo(() => {
       .then(() => {
         navigate(Routing.top.path);
         dispatch(displayFloatingNotificationBar({
-          isDisplay: true,
-          type: "SUCCESS",
-          message: "会員登録が完了いたしました！"
+          notification: {
+            type: "SUCCESS",
+            message: "会員登録が完了いたしました！"
+          }
         }))
       })
       .catch((error) => {
         console.error(error.code, error.message);
         dispatch(displayFloatingNotificationBar({
-          isDisplay: true,
-          type: "ERROR",
-          message: "登録されているメールアドレスです"
+          notification: {
+            type: "ERROR",
+            message: "登録されているメールアドレスです"
+          }
         }))
       })
       .finally(() => {
