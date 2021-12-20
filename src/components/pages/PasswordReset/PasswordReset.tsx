@@ -8,6 +8,10 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { displayFloatingNotificationBar } from "../../../features/floatingNotificationBar/floatingNotificationBarSlice";
 
+// - ルーティング ========================================================================================================
+import { useNavigate } from "react-router-dom";
+import { Routing } from "../../../router/routing";
+
 // - アセット ============================================================================================================
 import styles from "./PasswordReset.module.scss";
 
@@ -33,6 +37,7 @@ export const PasswordReset: VFC = memo(() => {
   const [ isDisplayLoadingOverlay, setIsDisplayLoadingOverlay ] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onClickSendPasswordResetEmail: SubmitHandler<PasswordResetInputValue> = (inputValue): void => {
 
@@ -41,6 +46,7 @@ export const PasswordReset: VFC = memo(() => {
 
     sendPasswordResetEmail(auth, inputValue.email)
       .then(() => {
+        navigate(Routing.signIn.path);
         dispatch(displayFloatingNotificationBar({
           notification: {
             type: "INFO",
@@ -53,7 +59,7 @@ export const PasswordReset: VFC = memo(() => {
         dispatch(displayFloatingNotificationBar({
           notification: {
             type: "ERROR",
-            message: "メールの送信に失敗いたしました。"
+            message: "登録されていないメールアドレスです"
           }
         }));
       })
