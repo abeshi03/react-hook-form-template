@@ -20,9 +20,11 @@ import { InputField } from "../../../atoms/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
 
 // - バリデーション =======================================================================================================
-import { userValidations } from "../../../../config/validations/userValidations";
-import { emailErrorMessages } from "../../../../config/validations/userValidations";
-import { passwordErrorMessages } from "../../../../config/validations/userValidations";
+import {
+  userValidations,
+  emailErrorMessages,
+  passwordErrorMessages
+} from "../../../../config/validations/userValidations";
 
 // - inputState ========================================================================================================
 export type SignUpInputValues = {
@@ -80,7 +82,7 @@ export const SignUpControlGroup: VFC = memo(() => {
 
         <div className={styles.inputContainer}>
           <InputField
-            type="text"
+            type="email"
             required={userValidations.email.required}
             label="メールアドレス"
             placeholder="メールアドレスを入力してください"
