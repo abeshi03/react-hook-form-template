@@ -9,7 +9,7 @@ export const SignIn: VFC = memo(() => {
 
   return (
     <div className={styles.signInPage}>
-
+      <p>ログインページです</p>
     </div>
   );
 });
