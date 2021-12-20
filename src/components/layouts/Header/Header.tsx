@@ -1,6 +1,6 @@
 // - フレームワーク =======================================================================================================
-import React, {memo, useEffect, useState, VFC} from "react";
-import {onAuthStateChanged, signOut} from "firebase/auth";
+import React, { memo, useEffect, useState, VFC } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
 
 // - グローバルstate =====================================================================================================
@@ -52,9 +52,11 @@ export const Header: VFC = memo(() => {
     onAuthStateChanged(auth, (user) => {
       if (isNotNull(user)) {
         setIsLogin(true);
+      } else {
+        setIsLogin(false);
       }
     })
-  }, [])
+  }, [ isLogin ])
 
   return (
     <header className={styles.header}>
