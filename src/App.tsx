@@ -29,36 +29,10 @@ const App: VFC = () => {
 
   const currentUser = auth.currentUser;
 
-  const logout = (): void => {
-
-    signOut(auth)
-      .then(() => {
-        navigate(Routing.signIn.path);
-        dispatch(displayFloatingNotificationBar({
-          notification: {
-            type: "SUCCESS",
-            message: "ログアウトしました"
-          }
-        }));
-      })
-      .catch((error: unknown) => {
-        console.log(error);
-        dispatch(displayFloatingNotificationBar({
-          notification: {
-            type: "ERROR",
-            message: "ログアウトに失敗いたしました"
-          }
-        }));
-      })
-  }
-
   return (
     <>
       <Header/>
       <div>トップページです</div>
-        {!isLogin && <Link to={Routing.signUp.path}>会員登録</Link>}
-        {!isLogin && <Link to={Routing.signIn.path}>ログイン</Link>}
-        {isLogin && <button onClick={logout}>ログアウト</button>}
       <div>{currentUser?.email}</div>
     </>
   );
