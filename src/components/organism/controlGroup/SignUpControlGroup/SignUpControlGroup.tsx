@@ -4,6 +4,14 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+// - グローバルstate =====================================================================================================
+import { useDispatch } from "react-redux";
+import { displayFloatingNotificationBar } from "../../../../features/floatingNotificationBar/floatingNotificationBarSlice";
+
+// - ルーティング ========================================================================================================
+import { useNavigate } from "react-router-dom";
+import { Routing } from "../../../../router/routing";
+
 // - アセット ===========================================================================================================
 import styles from "./SignUpControlGroup.module.scss";
 
@@ -31,14 +39,34 @@ export const SignUpControlGroup: VFC = memo(() => {
   const [ isDisabled, setIsDisabled ] = useState(false);
   const [ isDisplayLoadingOverlay, setIsDisplayLoadingOverlay ] = useState(false);
 
-  const onSubmit: SubmitHandler<SignUpInputValues> = (inputValue) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+  const signUp: SubmitHandler<SignUpInputValues> = (inputValue) => {
 
     setIsDisabled(true);
     setIsDisplayLoadingOverlay(true);
 
     createUserWithEmailAndPassword(auth, inputValue.email, inputValue.password)
-      .then(() => console.log("成功"))
-      .catch((error) => console.log(error))
+      .then(() => {
+        navigate(Routing.top.path);
+        dispatch(displayFloatingNotificationBar({
+          notification: {
+            type: "SUCCESS",
+            message: "会員登録が完了いたしました！"
+          }
+        }))
+      })
+      .catch((error) => {
+        console.error(error.code, error.message);
+        dispatch(displayFloatingNotificationBar({
+          notification: {
+            type: "ERROR",
+            message: "登録されているメールアドレスです"
+          }
+        }))
+      })
       .finally(() => {
         setIsDisabled(false);
         setIsDisplayLoadingOverlay(false);
@@ -48,7 +76,7 @@ export const SignUpControlGroup: VFC = memo(() => {
 
   return (
     <>
-      <form className={styles.signInControlGroup} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.signInControlGroup} onSubmit={handleSubmit(signUp)}>
 
         <div className={styles.inputContainer}>
           <InputField
