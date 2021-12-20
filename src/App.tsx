@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 // - グローバルstate =====================================================================================================
 import { useDispatch } from "react-redux";
 import { displayFloatingNotificationBar } from "./features/floatingNotificationBar/floatingNotificationBarSlice";
+import { Header } from "./components/layouts/Header/Header";
 
 const App: VFC = () => {
 
@@ -53,6 +54,7 @@ const App: VFC = () => {
 
   return (
     <>
+      <Header/>
       <div>トップページです</div>
         {!isLogin && <Link to={Routing.signUp.path}>会員登録</Link>}
         {!isLogin && <Link to={Routing.signIn.path}>ログイン</Link>}
