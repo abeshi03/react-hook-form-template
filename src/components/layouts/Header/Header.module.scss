@@ -1,0 +1,50 @@
+@import "src/assets/styles/global/mixins/mixins";
+
+.header {
+
+  $MAX_CONTENT_WIDTH: 937px;
+  $LEFT_OR_RIGHT_MINIMAL_EQUAL_PADDINGS__WIDE_SCREENS: 34px;
+
+  $wideScreen: $MAX_CONTENT_WIDTH+2*$LEFT_OR_RIGHT_MINIMAL_EQUAL_PADDINGS__WIDE_SCREENS;
+
+  $MEDIUM_SCREENS__MINIMAL_WIDTH: 580px;
+
+  @mixin WideScreen() {
+   @media screen and (min-width: $wideScreen) {
+     @content
+   }
+  }
+
+  @mixin MediumAndSmallScreen() {
+   @media screen and (max-width: $wideScreen - 1) {
+     @content
+   }
+  }
+
+  @include WideScreen() {
+    @include CenteredContentWithComputedSidePaddings($MAX_CONTENT_WIDTH);
+  }
+
+  @include MediumAndSmallScreen() {
+    @include EqualLeftAndRightPaddings(5%);
+  }
+
+  border: 1px solid #DBDBDB;
+
+
+  .headerInner {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 60px;
+  }
+
+
+  .logo {
+
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
