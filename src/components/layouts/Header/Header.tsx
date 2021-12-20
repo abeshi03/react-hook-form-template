@@ -66,7 +66,7 @@ export const Header: VFC = memo(() => {
         </div>
         <div className={styles.right}>
           { isLogin ? (
-            <div className={styles.link} onClick={logout}>ログアウト</div>
+            <div className={styles.link} onClick={logout} role="link">ログアウト</div>
           ) : (
             <>
               <Link to={Routing.signIn.path} className={styles.link}>ログイン</Link>
