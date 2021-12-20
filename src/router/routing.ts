@@ -10,5 +10,9 @@ export const Routing = {
   signIn: {
     path: "/sign_in",
     pageName: "ログイン"
+  },
+  passwordReset: {
+    path: "/password_reset",
+    pageName: "パスワード再設定"
   }
 }
