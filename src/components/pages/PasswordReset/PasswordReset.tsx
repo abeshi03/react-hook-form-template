@@ -1,13 +1,91 @@
 // - ライブラリー ========================================================================================================
-import React, { memo, VFC } from "react";
+import React, {memo, useState, VFC} from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { auth } from "../../../firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
+
+// - グローバルstate =====================================================================================================
+import { useDispatch } from "react-redux";
+import { displayFloatingNotificationBar } from "../../../features/floatingNotificationBar/floatingNotificationBarSlice";
 
 // - アセット ============================================================================================================
-// - ルーティング =========================================================================================================
+import styles from "./PasswordReset.module.scss";
 
-/* eslint-disable-next-line react/display-name */
+// - 子コンポーネント =====================================================================================================
+import { InputField } from "../../atoms/InputField/InputField";
+import { LoadingOverlay } from "../../atoms/LoadingOverlay/LoadingOverlay";
+
+// - バリデーション =======================================================================================================
+import { userValidations, emailErrorMessages } from "../../../config/validations/userValidations";
+
+// - inputState ========================================================================================================
+export type PasswordResetInputValue = {
+  email: string
+};
+// - ===================================================================================================================
+
+
 export const PasswordReset: VFC = memo(() => {
 
+  const { register, handleSubmit, formState: { errors } } = useForm<PasswordResetInputValue>();
+
+  const [ isDisabled, setIsDisabled ] = useState(false);
+  const [ isDisplayLoadingOverlay, setIsDisplayLoadingOverlay ] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const onClickSendPasswordResetEmail: SubmitHandler<PasswordResetInputValue> = (inputValue): void => {
+
+    setIsDisabled(true);
+    setIsDisplayLoadingOverlay(true);
+
+    sendPasswordResetEmail(auth, inputValue.email)
+      .then(() => {
+        dispatch(displayFloatingNotificationBar({
+          notification: {
+            type: "INFO",
+            message: "メールを送信いたしました。"
+          }
+        }));
+      })
+      .catch((error: unknown) => {
+        console.log(error);
+        dispatch(displayFloatingNotificationBar({
+          notification: {
+            type: "ERROR",
+            message: "メールの送信に失敗いたしました。"
+          }
+        }));
+      })
+      .finally(() => {
+        setIsDisabled(false);
+        setIsDisplayLoadingOverlay(false);
+      })
+  }
+
   return (
-    <div>パスワードリセット</div>
+    <>
+      <div>パスワードリセット</div>
+      <form className={styles.passwordResetForm} onSubmit={handleSubmit(onClickSendPasswordResetEmail)}>
+
+        <div className={styles.inputContainer}>
+          <InputField
+            type="email"
+            required={userValidations.email.required}
+            label="メールアドレス"
+            placeholder="メールアドレスを入力してください"
+            inputProps={register("email",{
+              required: userValidations.email.required,
+              pattern: userValidations.email.regexp
+            })}
+            autoComplete="email"
+          />
+          {errors.email && emailErrorMessages(errors.email)}
+        </div>
+
+        <button type="submit" disabled={isDisabled}>メールを送信する</button>
+      </form>
+      { isDisplayLoadingOverlay && <LoadingOverlay/> }
+    </>
   );
 });
