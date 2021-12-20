@@ -20,9 +20,9 @@ import { InputField } from "../../../atoms/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
 
 // - バリデーション =======================================================================================================
-import { signUpValidations } from "../../../../config/validations/signUpValidations";
-import { emailErrorMessages } from "../../../../config/validations/signUpValidations";
-import { passwordErrorMessages } from "../../../../config/validations/signUpValidations";
+import { userValidations } from "../../../../config/validations/userValidations";
+import { emailErrorMessages } from "../../../../config/validations/userValidations";
+import { passwordErrorMessages } from "../../../../config/validations/userValidations";
 
 // - inputState ========================================================================================================
 export type SignUpInputValues = {
@@ -81,12 +81,12 @@ export const SignUpControlGroup: VFC = memo(() => {
         <div className={styles.inputContainer}>
           <InputField
             type="text"
-            required={signUpValidations.email.required}
+            required={userValidations.email.required}
             label="メールアドレス"
             placeholder="メールアドレスを入力してください"
             inputProps={register("email",{
-              required: signUpValidations.email.required,
-              pattern: signUpValidations.email.regexp
+              required: userValidations.email.required,
+              pattern: userValidations.email.regexp
             })}
             autoComplete="email"
           />
@@ -96,14 +96,14 @@ export const SignUpControlGroup: VFC = memo(() => {
         <div className={styles.inputContainer}>
           <InputField
             type="password"
-            required={signUpValidations.password.required}
+            required={userValidations.password.required}
             label="パスワード"
-            guidance={`※パスワードは最低${signUpValidations.password.minLength}文字以上で入力してください`}
+            guidance={`※パスワードは最低${userValidations.password.minLength}文字以上で入力してください`}
             placeholder="パスワードを入力してください"
             inputProps={register("password", {
-              required: signUpValidations.password.required,
-              minLength: signUpValidations.password.minLength,
-              maxLength: signUpValidations.password.maxLength
+              required: userValidations.password.required,
+              minLength: userValidations.password.minLength,
+              maxLength: userValidations.password.maxLength
             })}
             autoComplete="new-password"
           />

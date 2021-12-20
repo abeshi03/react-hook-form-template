@@ -3,7 +3,7 @@ import React from "react";
 import { FieldError } from "react-hook-form";
 
 // - バリデーション =======================================================================================================
-export const signUpValidations = {
+export const userValidations = {
 
   email: {
     required: true,
@@ -32,11 +32,11 @@ export const passwordErrorMessages = (error: FieldError) => {
     case "required": return <span className="errorMessage">パスワードは必須です</span>;
 
     case "minLength": return <span className="errorMessage">
-      {`パスワードは${signUpValidations.password.minLength}〜${signUpValidations.password.maxLength}文字で入力してください`}
+      {`パスワードは${userValidations.password.minLength}〜${userValidations.password.maxLength}文字で入力してください`}
       </span>;
 
     case "maxLength": return <span className="errorMessage">
-        {`パスワードは${signUpValidations.password.minLength}〜${signUpValidations.password.maxLength}文字で入力してください`}
+        {`パスワードは${userValidations.password.minLength}〜${userValidations.password.maxLength}文字で入力してください`}
       </span>
   }
 };
