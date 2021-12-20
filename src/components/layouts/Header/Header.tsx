@@ -16,12 +16,12 @@ export const Header: VFC = memo(() => {
     <header className={styles.header}>
       <div className={styles.headerInner}>
         <div className={styles.left}>
-          <div className={styles.logo}>ロゴが入る</div>
+          <Link to={Routing.top.path} className={styles.logo}>ロゴが入る</Link>
         </div>
         <div className={styles.right}>
-          <Link to={Routing.signIn.path}>ログイン</Link>
-          <Link to={Routing.signUp.path}>会員登録</Link>
-          <div className={styles.logout}>ログアウト</div>
+          <Link to={Routing.signIn.path} className={styles.link}>ログイン</Link>
+          <Link to={Routing.signUp.path} className={styles.link}>会員登録</Link>
+          <div className={styles.link}>ログアウト</div>
         </div>
       </div>
     </header>
