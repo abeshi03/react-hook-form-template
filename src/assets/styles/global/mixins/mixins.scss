@@ -1,0 +1,32 @@
+@mixin EqualLeftAndRightMargin($value) {
+
+  margin-right: $value;
+  margin-left: $value;
+}
+
+
+@mixin EqualWidthAndHeight($value) {
+
+  width: $value;
+  height: $value;
+}
+
+
+@mixin EqualTopAndBottomPaddings($value) {
+
+  padding-bottom: $value;
+  padding-top: $value;
+}
+
+
+@mixin EqualLeftAndRightPaddings($value) {
+
+  padding-left: $value;
+  padding-right: $value;
+}
+
+@mixin CenteredContentWithComputedSidePaddings($value) {
+
+  padding-left: calc(0.5 * (100% - #{$value}));
+  padding-right: calc(0.5 * (100% - #{$value}));
+}
