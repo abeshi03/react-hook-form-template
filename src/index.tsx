@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import { SignIn } from "./components/pages/SignIn/SignIn";
 import { PasswordReset } from "./components/pages/PasswordReset/PasswordReset";
 import { Layout } from "./components/layouts/Layout";
+import { PostAddingPage } from "./components/pages/Post/Add/PostAddingPage";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -22,6 +23,7 @@ ReactDOM.render(
           <Route path={Routing.signUp.path} element={<SignUp/>}/>
           <Route path={Routing.signIn.path} element={<SignIn/>}/>
           <Route path={Routing.passwordReset.path} element={<PasswordReset/>}/>
+          <Route path={Routing.post.add.path} element={<PostAddingPage/>}/>
         </Routes>
       </BrowserRouter>
     </Provider>
