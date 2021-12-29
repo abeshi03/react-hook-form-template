@@ -1,4 +1,4 @@
-// - フレームワーク =======================================================================================================
+// - ライブラリー ========================================================================================================
 import React, { memo, useEffect, VFC } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
@@ -58,15 +58,9 @@ export const Header: VFC = memo(() => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (isNotNull(user)) {
-        dispatch(setIsLogin({
-          isLogin: true
-        }));
-      } else {
-        dispatch(setIsLogin({
-          isLogin: false
-        }));
-      }
+      dispatch(setIsLogin({
+        isLogin: isNotNull(user)
+      }))
     })
   }, [ dispatch ])
 

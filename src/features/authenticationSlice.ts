@@ -1,4 +1,6 @@
+// - ライブラリー ========================================================================================================
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 
 export type LoginState = {
   isLogin: boolean;
