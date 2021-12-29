@@ -1,11 +1,13 @@
 // - フレームワーク =======================================================================================================
-import React, { memo, useEffect, useState, VFC } from "react";
+import React, { memo, useEffect, VFC } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
 
 // - グローバルstate =====================================================================================================
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { displayFloatingNotificationBar } from "../../../features/floatingNotificationBar/floatingNotificationBarSlice";
+import { setIsLogin } from "../../../features/authenticationSlice";
+import { RootState } from "../../../store";
 
 // - アセット ============================================================================================================
 import styles from "./Header.module.scss";
@@ -20,8 +22,7 @@ import { isNotNull } from "../../../utils/isNotNull";
 
 export const Header: VFC = memo(() => {
 
-  const [ isLogin, setIsLogin ] = useState(false);
-
+  const globalState = useSelector((state: RootState) => state.authentication);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -29,13 +30,20 @@ export const Header: VFC = memo(() => {
 
     signOut(auth)
       .then(() => {
+
+        dispatch(setIsLogin({
+          isLogin: false
+        }));
+
         navigate(Routing.signIn.path);
+
         dispatch(displayFloatingNotificationBar({
           notification: {
             type: "SUCCESS",
             message: "ログアウトしました"
           }
         }));
+
       })
       .catch((error: unknown) => {
         console.log(error);
@@ -51,12 +59,16 @@ export const Header: VFC = memo(() => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (isNotNull(user)) {
-        setIsLogin(true);
+        dispatch(setIsLogin({
+          isLogin: true
+        }));
       } else {
-        setIsLogin(false);
+        dispatch(setIsLogin({
+          isLogin: false
+        }));
       }
     })
-  }, [])
+  }, [ dispatch ])
 
   return (
     <header className={styles.header}>
@@ -65,7 +77,7 @@ export const Header: VFC = memo(() => {
           <Link to={Routing.top.path} className={styles.logo}>ロゴが入る</Link>
         </div>
         <div className={styles.right}>
-          { isLogin ? (
+          { globalState.isLogin ? (
             <div className={styles.link} onClick={logout} role="link">ログアウト</div>
           ) : (
             <>
