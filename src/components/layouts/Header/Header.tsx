@@ -56,7 +56,7 @@ export const Header: VFC = memo(() => {
         setIsLogin(false);
       }
     })
-  }, [ isLogin ])
+  }, [])
 
   return (
     <header className={styles.header}>
