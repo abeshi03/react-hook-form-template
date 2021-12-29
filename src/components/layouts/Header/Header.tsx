@@ -49,6 +49,7 @@ export const Header: VFC = memo(() => {
   }
 
   useEffect(() => {
+
     onAuthStateChanged(auth, (user) => {
       if (isNotNull(user)) {
         setIsLogin(true);
@@ -56,7 +57,8 @@ export const Header: VFC = memo(() => {
         setIsLogin(false);
       }
     })
-  }, [ isLogin ])
+
+  }, [])
 
   return (
     <header className={styles.header}>
