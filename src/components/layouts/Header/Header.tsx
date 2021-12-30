@@ -1,6 +1,6 @@
 // - ライブラリー ========================================================================================================
-import React, { memo, useEffect, VFC } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import React, { memo, VFC } from "react";
+import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
 
 // - グローバルstate =====================================================================================================
@@ -15,9 +15,6 @@ import styles from "./Header.module.scss";
 // - ルーティング =========================================================================================================
 import { Routing } from "../../../router/routing";
 import { useNavigate, Link } from "react-router-dom";
-
-// - 補助関数 ============================================================================================================
-import { isNotNull } from "../../../utils/isNotNull";
 
 
 export const Header: VFC = memo(() => {
@@ -55,14 +52,6 @@ export const Header: VFC = memo(() => {
         }));
       })
   }
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      dispatch(setIsLogin({
-        isLogin: isNotNull(user)
-      }))
-    })
-  }, [ dispatch ])
 
   return (
     <header className={styles.header}>
