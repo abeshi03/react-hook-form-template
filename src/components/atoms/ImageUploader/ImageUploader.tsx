@@ -21,6 +21,24 @@ type Props = {
 }
 
 
+const getImageUploadGuidance = (maximalImagesCount: number | undefined): string => {
+
+  if (isUndefined(maximalImagesCount)) {
+    return "画像をアップロードしてください(ドラック&ドロップ可)";
+  }
+
+  if (maximalImagesCount === 1) {
+    return `画像を${maximalImagesCount}枚アップロードしてください(ドラック&ドロップ可)`;
+  }
+
+  return `画像を${maximalImagesCount}枚までアップロードしてください(ドラック&ドロップ可)`;
+}
+
+const isMultipleFiles = (maximalImagesCount: number | undefined): boolean => {
+  return isUndefined(maximalImagesCount) || maximalImagesCount > 1;
+}
+
+
 export const ImageUploader: VFC<Props> = memo((props) => {
 
   const {
@@ -31,13 +49,8 @@ export const ImageUploader: VFC<Props> = memo((props) => {
     defaultValue,
     accept,
     maximalImagesCount,
-    minimalImagesCount = 0,
     inputProps
   } = props;
-
-  const isMultipleFiles = (): boolean => {
-    return isUndefined(maximalImagesCount) || maximalImagesCount > 1;
-  }
 
   return (
     <>
@@ -51,16 +64,21 @@ export const ImageUploader: VFC<Props> = memo((props) => {
           <div className={styles.icon}>
             <ImageAddingIcon/>
           </div>
-          <p className={styles.uploadGuidance}>画像をアップロードしてください</p>
-          <input
-            { ...inputProps }
-            className={styles.imageUploader}
-            type="file"
-            defaultValue={defaultValue}
-            accept={accept}
-            multiple={isMultipleFiles()}
-            disabled={disabled}
-          />
+          <p className={styles.uploadGuidance}>{getImageUploadGuidance(maximalImagesCount)}</p>
+
+          {/*labelでinputを囲って全体をクリックできるようにしている*/}
+          <label className={styles.inputClickFlag}>
+            <input
+              { ...inputProps }
+              className={styles.inputFiles}
+              type="file"
+              defaultValue={defaultValue}
+              accept={accept}
+              multiple={isMultipleFiles(maximalImagesCount)}
+              disabled={disabled}
+            />
+          </label>
+
         {guidance && <p className={styles.guidance}>{guidance}</p>}
         </div>
       </div>
