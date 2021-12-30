@@ -10,7 +10,6 @@ import { Routing } from "../../../../router/routing";
 // - グローバルstate =====================================================================================================
 import { useDispatch } from "react-redux";
 import { displayFloatingNotificationBar } from "../../../../features/floatingNotificationBar/floatingNotificationBarSlice";
-import { setIsLogin } from "../../../../features/authenticationSlice";
 
 
 export const GoogleSignInButton: VFC = memo(() => {
@@ -23,13 +22,7 @@ export const GoogleSignInButton: VFC = memo(() => {
   const onClickGoogleSignIn = (): void => {
     signInWithPopup(auth, provider)
       .then(() => {
-
-        dispatch(setIsLogin({
-          isLogin: true
-        }));
-
         navigate(Routing.top.path);
-
         dispatch(displayFloatingNotificationBar({
           notification: {
             type: "SUCCESS",

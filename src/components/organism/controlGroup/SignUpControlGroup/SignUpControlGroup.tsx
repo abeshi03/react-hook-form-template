@@ -7,7 +7,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 // - グローバルstate =====================================================================================================
 import { useDispatch } from "react-redux";
 import { displayFloatingNotificationBar } from "../../../../features/floatingNotificationBar/floatingNotificationBarSlice";
-import { setIsLogin } from "../../../../features/authenticationSlice";
 
 // - ルーティング ========================================================================================================
 import { useNavigate } from "react-router-dom";
@@ -53,13 +52,7 @@ export const SignUpControlGroup: VFC = memo(() => {
 
     createUserWithEmailAndPassword(auth, inputValue.email, inputValue.password)
       .then(() => {
-
-        dispatch(setIsLogin({
-          isLogin: true
-        }));
-
         navigate(Routing.top.path);
-
         dispatch(displayFloatingNotificationBar({
           notification: {
             type: "SUCCESS",

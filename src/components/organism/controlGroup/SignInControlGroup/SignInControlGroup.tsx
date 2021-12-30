@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 // - グローバルstate =====================================================================================================
 import { useDispatch } from "react-redux";
 import { displayFloatingNotificationBar } from "../../../../features/floatingNotificationBar/floatingNotificationBarSlice";
-import { setIsLogin } from "../../../../features/authenticationSlice";
 
 // - アセット ============================================================================================================
 import styles from "./SignInControlGroup.module.scss";
@@ -53,20 +52,13 @@ export const SignInControlGroup: VFC = memo(() => {
 
     signInWithEmailAndPassword(auth, inputValue.email, inputValue.password)
       .then(() => {
-
-        dispatch(setIsLogin({
-          isLogin: true
-        }));
-
         navigate(Routing.top.path);
-
         dispatch(displayFloatingNotificationBar({
           notification: {
             type: "SUCCESS",
             message: "ログインしました！"
           }
         }));
-
       })
       .catch((error: unknown) => {
         console.log(error);

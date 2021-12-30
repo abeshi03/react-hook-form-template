@@ -6,7 +6,6 @@ import { auth } from "../../../firebase";
 // - グローバルstate =====================================================================================================
 import { useDispatch, useSelector } from "react-redux";
 import { displayFloatingNotificationBar } from "../../../features/floatingNotificationBar/floatingNotificationBarSlice";
-import { setIsLogin } from "../../../features/authenticationSlice";
 import { RootState } from "../../../store";
 
 // - アセット ============================================================================================================
@@ -27,20 +26,13 @@ export const Header: VFC = memo(() => {
 
     signOut(auth)
       .then(() => {
-
-        dispatch(setIsLogin({
-          isLogin: false
-        }));
-
         navigate(Routing.signIn.path);
-
         dispatch(displayFloatingNotificationBar({
           notification: {
             type: "SUCCESS",
             message: "ログアウトしました"
           }
         }));
-
       })
       .catch((error: unknown) => {
         console.log(error);
