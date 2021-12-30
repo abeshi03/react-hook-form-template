@@ -10,6 +10,10 @@ export const postValidations = {
     required: true,
     minLength: 1,
     maxLength: 1000
+  },
+
+  image: {
+    required: true
   }
 };
 
@@ -28,3 +32,10 @@ export const descriptionErrorMessage = (error: FieldError) => {
       {`投稿内容は${postValidations.description.minLength}~${postValidations.description.maxLength}文字で入力してください`}</span>;
   }
 };
+
+export const imageErrorMessage = (error: FieldError) => {
+  switch (error.type) {
+
+    case "required": return <span className="errorMessage">画像は必須です</span>;
+  }
+}
