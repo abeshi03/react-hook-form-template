@@ -1,5 +1,6 @@
-// - フレームワーク =======================================================================================================
-import React, { memo, VFC } from "react";
+// - ライブラリー =========================================================================================================
+import React, {memo, useCallback, VFC} from "react";
+import { useDropzone } from "react-dropzone";
 
 // - アセット ============================================================================================================
 import styles from "./ImageUploader.module.scss";
@@ -52,13 +53,21 @@ export const ImageUploader: VFC<Props> = memo((props) => {
     inputProps
   } = props;
 
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const file = acceptedFiles[0]
+    console.log(file);
+  }, [])
+
+  const { getRootProps, getInputProps } = useDropzone({ onDrop })
+
+
   return (
     <>
       <div className={styles.labelAndRequiredBadge}>
         {label && <label htmlFor={label} className={styles.label}>{label}</label>}
         {required && <span className={styles.requiredBadge}>必須</span>}
       </div>
-      <div className={styles.imageUploaderButtonComposition}>
+      <div className={styles.imageUploadArea} {...getRootProps()}>
 
         <div className={styles.uploadButton} role="button">
           <div className={styles.icon}>
@@ -70,6 +79,7 @@ export const ImageUploader: VFC<Props> = memo((props) => {
           <label className={styles.inputClickFlag}>
             <input
               { ...inputProps }
+              {...getInputProps()}
               className={styles.inputFiles}
               type="file"
               defaultValue={defaultValue}
