@@ -12,6 +12,7 @@ export const PostAddingPage: VFC = memo(() => {
 
   return (
     <main className={styles.PostAddingPage}>
+      <h2>投稿ページです</h2>
       <PostAddingControlGroup/>
     </main>
   );
