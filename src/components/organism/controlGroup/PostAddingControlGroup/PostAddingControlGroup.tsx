@@ -58,6 +58,8 @@ export const PostAddingControlGroup: VFC = memo(() => {
         <ImageUploader
           label="画像"
           required={postValidations.image.required}
+          accept={postValidations.image.accept}
+          maximalImagesCount={postValidations.image.maximalImagesCount}
           inputProps={register("image", {
             required: postValidations.image.required
           })}

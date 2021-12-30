@@ -13,7 +13,9 @@ export const postValidations = {
   },
 
   image: {
-    required: true
+    required: true,
+    accept: ".png, .jpeg",
+    maximalImagesCount: 1
   }
 };
 
