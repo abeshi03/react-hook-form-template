@@ -13,6 +13,8 @@ type Props = {
   disabled?: boolean;
   defaultValue?: string;
   autoComplete?: string;
+  rows?: number;
+  cols?: number;
   inputProps: React.HTMLAttributes<HTMLTextAreaElement>;
 }
 
@@ -26,6 +28,8 @@ export const Textarea: VFC<Props> = memo((props) => {
     disabled = false,
     defaultValue,
     autoComplete,
+    rows,
+    cols,
     inputProps
   } = props;
 
@@ -37,7 +41,9 @@ export const Textarea: VFC<Props> = memo((props) => {
       </div>
       <textarea
         { ...inputProps }
-        className={styles.inputField}
+        className={styles.textarea}
+        rows={rows}
+        cols={cols}
         defaultValue={defaultValue}
         placeholder={placeholder}
         disabled={disabled}
