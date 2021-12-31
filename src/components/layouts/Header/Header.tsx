@@ -1,11 +1,12 @@
-// - フレームワーク =======================================================================================================
-import React, { memo, useEffect, useState, VFC } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+// - ライブラリー ========================================================================================================
+import React, { memo, VFC } from "react";
+import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
 
 // - グローバルstate =====================================================================================================
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { displayFloatingNotificationBar } from "../../../features/floatingNotificationBar/floatingNotificationBarSlice";
+import { RootState } from "../../../store";
 
 // - アセット ============================================================================================================
 import styles from "./Header.module.scss";
@@ -14,14 +15,10 @@ import styles from "./Header.module.scss";
 import { Routing } from "../../../router/routing";
 import { useNavigate, Link } from "react-router-dom";
 
-// - 補助関数 ============================================================================================================
-import { isNotNull } from "../../../utils/isNotNull";
-
 
 export const Header: VFC = memo(() => {
 
-  const [ isLogin, setIsLogin ] = useState(false);
-
+  const globalState = useSelector((state: RootState) => state.authentication);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -48,16 +45,6 @@ export const Header: VFC = memo(() => {
       })
   }
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (isNotNull(user)) {
-        setIsLogin(true);
-      } else {
-        setIsLogin(false);
-      }
-    })
-  }, [ isLogin ])
-
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
@@ -65,7 +52,7 @@ export const Header: VFC = memo(() => {
           <Link to={Routing.top.path} className={styles.logo}>ロゴが入る</Link>
         </div>
         <div className={styles.right}>
-          { isLogin ? (
+          { globalState.isLogin ? (
             <div className={styles.link} onClick={logout} role="link">ログアウト</div>
           ) : (
             <>

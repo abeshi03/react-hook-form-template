@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { displayFloatingNotificationBar } from "../../../../features/floatingNotificationBar/floatingNotificationBarSlice";
 
 
-export const GoogleSignInButton: VFC = memo((props) => {
+export const GoogleSignInButton: VFC = memo(() => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
