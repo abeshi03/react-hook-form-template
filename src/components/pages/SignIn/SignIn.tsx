@@ -38,7 +38,7 @@ export const SignIn: VFC = memo(() => {
       }))
     }
 
-  }, [ isLogin, navigate, dispatch ])
+  }, [ isLogin, dispatch, navigate ])
 
   return (
     <div className={styles.signInPage}>

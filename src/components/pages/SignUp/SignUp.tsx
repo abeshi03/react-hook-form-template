@@ -1,5 +1,15 @@
 // - フレームワーク =======================================================================================================
-import React, { memo, VFC } from "react";
+import React, {memo, useEffect, VFC} from "react";
+
+// - グローバルstate =====================================================================================================
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { useDispatch } from "react-redux";
+import { displayFloatingNotificationBar } from "../../../features/floatingNotificationBar/floatingNotificationBarSlice";
+
+// - ルーティング ========================================================================================================
+import { Routing } from "../../../router/routing";
+import { useNavigate } from "react-router-dom";
 
 // - アセット ===========================================================================================================
 import styles from "./SignUp.module.scss";
@@ -10,6 +20,24 @@ import { GoogleSignInButton } from "../../atoms/Button/GoogleSignInButton/Google
 
 
 export const SignUp: VFC = memo(() => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLogin: boolean = useSelector((state: RootState) => state.authentication.isLogin);
+
+  useEffect(() => {
+
+    if (isLogin) {
+      navigate(Routing.top.path);
+      dispatch(displayFloatingNotificationBar({
+        notification: {
+          type: "WARNING",
+          message: "すでにログイン状態です"
+        }
+      }))
+    }
+
+  }, [ isLogin, dispatch, navigate ])
 
   return (
     <div className={styles.signUp}>
