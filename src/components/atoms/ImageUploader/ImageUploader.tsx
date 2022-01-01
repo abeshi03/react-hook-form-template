@@ -1,8 +1,8 @@
 // - ライブラリー =========================================================================================================
-import React, { memo, useState, VFC } from "react";
+import React, {memo, useEffect, useState, VFC} from "react";
 import { useDropzone } from "react-dropzone";
 import { storage } from "../../../firebase";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // - グローバルstate =====================================================================================================
 import { useDispatch } from "react-redux";
@@ -102,9 +102,28 @@ export const ImageUploader: VFC<Props> = memo((props) => {
     setIsDisplayOverlay(true);
 
     const storageRef = ref(storage, `posts/${file.name}`)
+
+    // - 画像アップロード処理 ==============================================================================================
     await uploadBytes(storageRef, file)
       .then(() => {
         console.log("成功しました")
+
+        // - アップロードした画像URIの取得処理
+        getDownloadURL(ref(storage, `posts/${file.name}`))
+          .then((imageURI: string) => {
+            setImagesURI([...imagesURI, imageURI ])
+          })
+          .catch((error: unknown) => {
+            console.log(error);
+            console.log("画像の取得に失敗しました")
+
+            dispatch(displayFloatingNotificationBar({
+              notification: {
+                type: "ERROR",
+                message: "ファイルアップロード中不具合が発生いたしました。"
+              }
+            }));
+          })
       })
       .catch((error: unknown) => {
         console.log(error)
@@ -119,10 +138,12 @@ export const ImageUploader: VFC<Props> = memo((props) => {
       .finally(() => {
         setIsDisplayOverlay(false);
       })
-
-      // setImagesURI([...imagesURI, imageURI ])
   }
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+  useEffect(() => {
+    console.log(imagesURI)
+  }, [imagesURI])
 
   return (
     <>
