@@ -1,5 +1,5 @@
 // - ライブラリー ========================================================================================================
-import React, {memo, useState, VFC} from "react";
+import React, { memo, useState, VFC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { auth } from "../../../firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
