@@ -1,6 +1,8 @@
 // - ライブラリー =========================================================================================================
-import React, {memo, useEffect, useState, VFC} from "react";
+import React, { memo, useState, VFC } from "react";
 import { useDropzone } from "react-dropzone";
+import { storage } from "../../../firebase";
+import { ref, uploadBytes } from "firebase/storage";
 
 // - グローバルstate =====================================================================================================
 import { useDispatch } from "react-redux";
@@ -24,7 +26,6 @@ type Props = {
   supportedImagesFileExtensions: string[];
   maximalImagesCount?: number;
   minimalImagesCount?: number;
-  uploadFunction?: (base64EncodedImage: string) => Promise<string>;
   inputProps: React.HTMLAttributes<HTMLInputElement>;
 }
 
@@ -58,7 +59,6 @@ export const ImageUploader: VFC<Props> = memo((props) => {
     accept,
     supportedImagesFileExtensions,
     maximalImagesCount,
-    uploadFunction,
     inputProps
   } = props;
 
@@ -66,11 +66,14 @@ export const ImageUploader: VFC<Props> = memo((props) => {
   const dispatch = useDispatch();
 
   const [ isDisplayOverlay, setIsDisplayOverlay ] = useState(false);
-  const [ imageFile, setImageFile ] = useState<File | null>(null);
+  const [ imagesURI, setImagesURI ] = useState<string[]>([]);
 
-  const onDrop = (acceptedFiles: File[]): void => {
 
-    const file = acceptedFiles[0];
+  const onDrop = async (acceptedFiles: File[]): Promise<void> => {
+
+    if (acceptedFiles.length === 0) return;
+
+    let file: File = acceptedFiles[0];
 
     if (isNull(file)) {
       dispatch(displayFloatingNotificationBar({
@@ -96,15 +99,30 @@ export const ImageUploader: VFC<Props> = memo((props) => {
       return;
     }
 
-    setImageFile(file);
+    setIsDisplayOverlay(true);
 
-    console.log("アップロードしました")
+    const storageRef = ref(storage, `posts/${file.name}`)
+    await uploadBytes(storageRef, file)
+      .then(() => {
+        console.log("成功しました")
+      })
+      .catch((error: unknown) => {
+        console.log(error)
+        console.log("アップロードに失敗しました")
+        dispatch(displayFloatingNotificationBar({
+          notification: {
+            type: "ERROR",
+            message: "ファイルアップロード中不具合が発生いたしました。"
+          }
+        }));
+      })
+      .finally(() => {
+        setIsDisplayOverlay(false);
+      })
+
+      // setImagesURI([...imagesURI, imageURI ])
   }
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
-  useEffect(() => {
-    console.log(imageFile);
-  },[imageFile])
 
   return (
     <>
