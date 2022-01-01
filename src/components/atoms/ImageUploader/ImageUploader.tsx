@@ -1,5 +1,5 @@
 // - ライブラリー =========================================================================================================
-import React, {memo, useCallback, useState, VFC} from "react";
+import React, { memo, useState, VFC } from "react";
 import { useDropzone } from "react-dropzone";
 
 // - アセット ============================================================================================================
@@ -16,8 +16,10 @@ type Props = {
   disabled?: boolean;
   defaultValue?: string;
   accept?: string;
+  supportedImagesFileExtensions: string[];
   maximalImagesCount?: number;
   minimalImagesCount?: number;
+  uploadFunction?: (base64EncodedImage: string) => Promise<string>;
   inputProps: React.HTMLAttributes<HTMLInputElement>;
 }
 
@@ -49,18 +51,21 @@ export const ImageUploader: VFC<Props> = memo((props) => {
     disabled,
     defaultValue,
     accept,
+    supportedImagesFileExtensions,
     maximalImagesCount,
+    uploadFunction,
     inputProps
   } = props;
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const file = acceptedFiles[0]
-    console.log(file);
-  }, [])
 
-  const [ isDisplayOverlay, setIsDisplayOverlay ] = useState(true);
+  const [ isDisplayOverlay, setIsDisplayOverlay ] = useState(false);
+  const [ imageFile, setImageFile ] = useState<File | null>(null);
+
+  const onDrop = (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    setImageFile(file)
+  }
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
 
   return (
     <>
@@ -96,7 +101,6 @@ export const ImageUploader: VFC<Props> = memo((props) => {
               <div className={styles.loadingIndicator}></div>
             </div>
           }
-
         {guidance && <p className={styles.guidance}>{guidance}</p>}
         </div>
       </div>

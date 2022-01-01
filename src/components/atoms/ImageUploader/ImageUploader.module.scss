@@ -24,6 +24,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    cursor: cell;
   }
 
 
@@ -85,17 +87,16 @@
   }
 
 
-  .loadingIndicator, .loadingIndicator:after {
+  .loadingIndicator {
+
+    align-self: center;
 
     width: 64px;
     height: 64px;
     border-radius: 50%;
 
-
     $BACKGROUND_COLOR: rgba(255, 255, 255, 0.2);
     $ACCENT_COLOR: #c65151;
-
-    align-self: center;
 
     font-size: 7px;
     border-top: 1.1em solid $ACCENT_COLOR;

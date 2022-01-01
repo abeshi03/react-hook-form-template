@@ -48,7 +48,7 @@ export const PostAddingControlGroup: VFC = memo(() => {
           inputProps={register("description", {
             required: postValidations.description.required,
             minLength: postValidations.description.minLength,
-            maxLength: postValidations.description.maxLength
+            maxLength: postValidations.description.maxLength,
           })}
         />
         {errors.description && descriptionErrorMessage(errors.description)}
@@ -59,6 +59,7 @@ export const PostAddingControlGroup: VFC = memo(() => {
           label="画像"
           required={postValidations.image.required}
           accept={postValidations.image.accept}
+          supportedImagesFileExtensions={postValidations.image.supportedImagesFileExtensions}
           maximalImagesCount={postValidations.image.maximalImagesCount}
           inputProps={register("image", {
             required: postValidations.image.required
