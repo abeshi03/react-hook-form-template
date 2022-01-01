@@ -1,13 +1,18 @@
 // - ライブラリー =========================================================================================================
-import React, { memo, useState, VFC } from "react";
+import React, {memo, useEffect, useState, VFC} from "react";
 import { useDropzone } from "react-dropzone";
+
+// - グローバルstate =====================================================================================================
+import { useDispatch } from "react-redux";
+import { displayFloatingNotificationBar } from "../../../features/floatingNotificationBar/floatingNotificationBarSlice";
 
 // - アセット ============================================================================================================
 import styles from "./ImageUploader.module.scss";
 import { ImageAddingIcon } from "../../../assets/icons/ImageAddingIcon";
 
 // - 補助関数 ============================================================================================================
-import isUndefined from "../../../utils/isUndefined";
+import { isUndefined } from "../../../utils/isUndefined";
+import { isNull } from "../../../utils/isNull";
 
 type Props = {
   label?: string;
@@ -58,14 +63,48 @@ export const ImageUploader: VFC<Props> = memo((props) => {
   } = props;
 
 
+  const dispatch = useDispatch();
+
   const [ isDisplayOverlay, setIsDisplayOverlay ] = useState(false);
   const [ imageFile, setImageFile ] = useState<File | null>(null);
 
-  const onDrop = (acceptedFiles: File[]) => {
+  const onDrop = (acceptedFiles: File[]): void => {
+
     const file = acceptedFiles[0];
-    setImageFile(file)
+
+    if (isNull(file)) {
+      dispatch(displayFloatingNotificationBar({
+        notification: {
+          type: "ERROR",
+          message: "アップロードに失敗いたしました。再度お試しください。"
+        }
+      }))
+      return;
+    }
+
+    const isDisallowedFileType: boolean = !new RegExp(
+      `^[^.]+?.(?<filenameExtension>${supportedImagesFileExtensions.join("|")})$`, "ui"
+    ).test(file.name);
+
+    if (isDisallowedFileType) {
+      dispatch(displayFloatingNotificationBar({
+        notification: {
+          type: "ERROR",
+          message: `アップロードの画像の拡張子が許可されておりません。${supportedImagesFileExtensions.join(", ")}が選択可能です。`
+        }
+      }));
+      return;
+    }
+
+    setImageFile(file);
+
+    console.log("アップロードしました")
   }
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+  useEffect(() => {
+    console.log(imageFile);
+  },[imageFile])
 
   return (
     <>
