@@ -1,5 +1,5 @@
 // - ライブラリー =========================================================================================================
-import React, {memo, useCallback, VFC} from "react";
+import React, {memo, useCallback, useState, VFC} from "react";
 import { useDropzone } from "react-dropzone";
 
 // - アセット ============================================================================================================
@@ -58,7 +58,8 @@ export const ImageUploader: VFC<Props> = memo((props) => {
     console.log(file);
   }, [])
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop })
+  const [ isDisplayOverlay, setIsDisplayOverlay ] = useState(true);
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
 
   return (
@@ -88,6 +89,13 @@ export const ImageUploader: VFC<Props> = memo((props) => {
               disabled={disabled}
             />
           </label>
+
+          {/*ローディング処理 ================================================ */}
+          {isDisplayOverlay &&
+            <div className={styles.blockingLoadingOverlay}>
+              <div className={styles.loadingIndicator}></div>
+            </div>
+          }
 
         {guidance && <p className={styles.guidance}>{guidance}</p>}
         </div>
