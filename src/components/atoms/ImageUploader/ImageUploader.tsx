@@ -69,6 +69,7 @@ export const ImageUploader: VFC<Props> = memo((props) => {
   const [ imagesURI, setImagesURI ] = useState<string[]>([]);
 
 
+  // - 画像選択時の処理(ドラッグ&ドロップ可) =================================================================================
   const onDrop = async (acceptedFiles: File[]): Promise<void> => {
 
     if (acceptedFiles.length === 0) return;
@@ -96,6 +97,16 @@ export const ImageUploader: VFC<Props> = memo((props) => {
           message: `アップロードの画像の拡張子が許可されておりません。${supportedImagesFileExtensions.join(", ")}が選択可能です。`
         }
       }));
+      return
+    }
+
+    if (maximalImagesCount === imagesURI.length) {
+      dispatch(displayFloatingNotificationBar({
+        notification: {
+          type: "ERROR",
+          message: `画像は${maximalImagesCount}枚のみ選択可能です`
+        }
+      }));
       return;
     }
 
@@ -106,8 +117,6 @@ export const ImageUploader: VFC<Props> = memo((props) => {
     // - 画像アップロード処理 ==============================================================================================
     await uploadBytes(storageRef, file)
       .then(() => {
-        console.log("成功しました")
-
         // - アップロードした画像URIの取得処理
         getDownloadURL(ref(storage, `posts/${file.name}`))
           .then((imageURI: string) => {
