@@ -179,9 +179,23 @@ export const ImageUploader: VFC<Props> = memo((props) => {
               <div className={styles.loadingIndicator}></div>
             </div>
           }
-        {guidance && <p className={styles.guidance}>{guidance}</p>}
         </div>
       </div>
+
+      {imagesURI.length > 0 &&
+        <div className={styles.uploadImagesFlow}>
+          {imagesURI.map((imageFileURI: string, index: number) => (
+            <div
+              className={styles.uploadedImageThumbnail}
+              key={`UPLOAD_IMAGE-${index}`}
+              style={{backgroundImage: `url(${imageFileURI})`}}
+              role="img"
+            ></div>
+          ))}
+        </div>
+      }
+
+      {guidance && <p className={styles.guidance}>{guidance}</p>}
     </>
   );
 });

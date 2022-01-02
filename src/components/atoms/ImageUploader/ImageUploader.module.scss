@@ -116,6 +116,28 @@
       }
     }
   }
+
+
+  // - アップロードされたサムネイル =========================================================================================
+  .uploadImagesFlow {
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
+    grid-gap: 12px;
+
+    margin-top: 12px;
+  }
+
+
+  .uploadedImageThumbnail {
+
+    padding-top: 56.25%; /* 高さと幅の比を16:9に固定。9/16*100=56.25 */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    //position: relative;
+  }
 }
 
 
@@ -142,4 +164,11 @@
   margin-left: 10px;
 
   padding: 3px 5px;
+}
+
+
+.guidance {
+
+  font-size: 12px;
+  color: #5F5F5F;
 }
