@@ -150,6 +150,11 @@ export const ImageUploader: VFC<Props> = memo((props) => {
   }
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
+
+  const deleteImage = (targetImageIndex: number) => {
+    setImagesURI(imagesURI.splice(targetImageIndex, 1));
+  }
+
   useEffect(() => {
     console.log(imagesURI)
   }, [imagesURI])
