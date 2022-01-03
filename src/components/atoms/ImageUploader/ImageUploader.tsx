@@ -1,5 +1,5 @@
 // - ライブラリー =========================================================================================================
-import React, { memo, useEffect, useState, VFC } from "react";
+import React, { memo, useState, VFC } from "react";
 import { useDropzone } from "react-dropzone";
 import { storage } from "../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -154,6 +154,7 @@ export const ImageUploader: VFC<Props> = memo((props) => {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
 
+  // - 画像削除処理 ======================================================================================================
   const deleteImage = (targetImageIndex: number): void => {
 
     let newArray: string[] = [ ...imagesURI ];
@@ -162,9 +163,6 @@ export const ImageUploader: VFC<Props> = memo((props) => {
     setImagesURI(newArray);
   }
 
-  useEffect(() => {
-    console.log(imagesURI)
-  }, [imagesURI])
 
   return (
     <>
