@@ -16,6 +16,9 @@ import {
   imageErrorMessage
 } from "../../../../config/validations/postValidations";
 
+// - 画像ストレージ =======================================================================================================
+import { imageUploadedStorage } from "../../../../config/imageUploadedStorage";
+
 
 // - inputState ========================================================================================================
 export type postInputValues = {
@@ -59,6 +62,7 @@ export const PostAddingControlGroup: VFC = memo(() => {
           label="画像"
           required={postValidations.image.required}
           accept={postValidations.image.accept}
+          saveStorageDirectory={imageUploadedStorage.posts}
           supportedImagesFileExtensions={postValidations.image.supportedImagesFileExtensions}
           maximalImagesCount={postValidations.image.maximalImagesCount}
           inputProps={register("image", {

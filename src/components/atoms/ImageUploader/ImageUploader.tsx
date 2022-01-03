@@ -25,6 +25,7 @@ type Props = {
   defaultValue?: string;
   accept?: string;
   supportedImagesFileExtensions: string[];
+  saveStorageDirectory: string;
   maximalImagesCount?: number;
   minimalImagesCount?: number;
   inputProps: React.HTMLAttributes<HTMLInputElement>;
@@ -59,6 +60,7 @@ export const ImageUploader: VFC<Props> = memo((props) => {
     defaultValue,
     accept,
     supportedImagesFileExtensions,
+    saveStorageDirectory,
     maximalImagesCount,
     inputProps
   } = props;
@@ -113,13 +115,13 @@ export const ImageUploader: VFC<Props> = memo((props) => {
 
     setIsDisplayOverlay(true);
 
-    const storageRef = ref(storage, `posts/${file.name}`)
+    const storageRef = ref(storage, `${saveStorageDirectory}/${file.name}`)
 
     // - 画像アップロード処理 ==============================================================================================
     await uploadBytes(storageRef, file)
       .then(() => {
         // - アップロードした画像URIの取得処理
-        getDownloadURL(ref(storage, `posts/${file.name}`))
+        getDownloadURL(ref(storage, `${saveStorageDirectory}/${file.name}`))
           .then((imageURI: string) => {
             setImagesURI([...imagesURI, imageURI ])
           })
