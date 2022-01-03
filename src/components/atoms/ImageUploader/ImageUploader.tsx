@@ -1,5 +1,5 @@
 // - ライブラリー =========================================================================================================
-import React, {memo, useEffect, useState, VFC} from "react";
+import React, { memo, useEffect, useState, VFC } from "react";
 import { useDropzone } from "react-dropzone";
 import { storage } from "../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -11,6 +11,7 @@ import { displayFloatingNotificationBar } from "../../../features/floatingNotifi
 // - アセット ============================================================================================================
 import styles from "./ImageUploader.module.scss";
 import { ImageAddingIcon } from "../../../assets/icons/ImageAddingIcon";
+import { ImageDeletingIcon } from "../../../assets/icons/ImageDeletingIcon";
 
 // - 補助関数 ============================================================================================================
 import { isUndefined } from "../../../utils/isUndefined";
@@ -151,8 +152,12 @@ export const ImageUploader: VFC<Props> = memo((props) => {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
 
-  const deleteImage = (targetImageIndex: number) => {
-    setImagesURI(imagesURI.splice(targetImageIndex, 1));
+  const deleteImage = (targetImageIndex: number): void => {
+
+    let newArray: string[] = [ ...imagesURI ];
+    newArray.splice(targetImageIndex, 1);
+
+    setImagesURI(newArray);
   }
 
   useEffect(() => {
@@ -204,7 +209,16 @@ export const ImageUploader: VFC<Props> = memo((props) => {
               key={`UPLOAD_IMAGE-${index}`}
               style={{backgroundImage: `url(${imageFileURI})`}}
               role="img"
-            ></div>
+            >
+              <div
+                className={styles.deleteButton}
+                role="button"
+                aria-label="画像を削除する"
+                onClick={() => deleteImage(index)}
+              >
+                <ImageDeletingIcon/>
+              </div>
+            </div>
           ))}
         </div>
       }

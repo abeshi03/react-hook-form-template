@@ -16,7 +16,7 @@ export const postValidations = {
     required: true,
     accept: ".png, .jpeg",
     supportedImagesFileExtensions: [ "png", "jpeg", "jpg" ], // アップロードのバリデーションの為にacceptと両方必要
-    maximalImagesCount: 1
+    maximalImagesCount: 2
   }
 };
 

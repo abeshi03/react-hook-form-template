@@ -132,12 +132,40 @@
 
 .uploadedImageThumbnail {
 
-  padding-top: 56.25%; /* 高さと幅の比を16:9に固定。9/16*100=56.25 */
+  aspect-ratio: 1/1;
+  //padding-top: 56.25%; /* 高さと幅の比を16:9に固定。9/16*100=56.25 */
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
 
-  //position: relative;
+  position: relative;
+}
+
+
+.deleteButton {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 5px;
+  padding: 4px;
+
+  background: rgba(black, 0.5);
+  cursor: pointer;
+
+  position: absolute;
+  top: 6px;
+  right: 6px;
+
+  width: 24px;
+  fill: white;
+
+
+  &:hover {
+
+    opacity: 0.8;
+  }
 }
 
 
