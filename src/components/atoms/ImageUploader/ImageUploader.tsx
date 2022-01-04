@@ -15,6 +15,7 @@ import { ImageDeletingIcon } from "../../../assets/icons/ImageDeletingIcon";
 
 // - 補助関数 ============================================================================================================
 import { isUndefined } from "../../../utils/isUndefined";
+import { isNotUndefined } from "../../../utils/isNotUndefined";
 import { isNull } from "../../../utils/isNull";
 
 type Props = {
@@ -77,7 +78,7 @@ export const ImageUploader: VFC<Props> = memo((props) => {
 
     if (acceptedFiles.length === 0) return;
 
-    let file: File = acceptedFiles[0];
+    const file: File = acceptedFiles[0];
 
     if (isNull(file)) {
       dispatch(displayFloatingNotificationBar({
@@ -103,7 +104,8 @@ export const ImageUploader: VFC<Props> = memo((props) => {
       return
     }
 
-    if (maximalImagesCount === imagesURI.length) {
+
+    if (isNotUndefined(maximalImagesCount) && maximalImagesCount <= imagesURI.length) {
       dispatch(displayFloatingNotificationBar({
         notification: {
           type: "ERROR",
@@ -112,6 +114,7 @@ export const ImageUploader: VFC<Props> = memo((props) => {
       }));
       return;
     }
+
 
     setIsDisplayOverlay(true);
 
