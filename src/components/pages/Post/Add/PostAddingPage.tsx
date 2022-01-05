@@ -1,5 +1,15 @@
 // - フレームワーク =======================================================================================================
-import React, { memo, VFC } from "react";
+import React, { memo, useEffect, VFC } from "react";
+
+// - グローバルstate =====================================================================================================
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { displayFloatingNotificationBar } from "../../../../features/floatingNotificationBar/floatingNotificationBarSlice";
+import { RootState } from "../../../../store";
+
+// - ルーティング ========================================================================================================
+import { Routing } from "../../../../router/routing";
+import { useNavigate } from "react-router-dom";
 
 // - アセット ============================================================================================================
 import styles from "./PostAddingPage.module.scss";
@@ -9,6 +19,16 @@ import { PostAddingControlGroup } from "../../../organism/controlGroup/PostAddin
 
 
 export const PostAddingPage: VFC = memo(() => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLogin: boolean = useSelector((state: RootState) => state.authentication.isLogin);
+
+  useEffect(() => {
+    if (!isLogin) {
+      // TODO
+    }
+  })
 
   return (
     <main className={styles.PostAddingPage}>
