@@ -124,9 +124,9 @@ export const ImageUploader: VFC<Props> = memo((props) => {
     try {
 
       await uploadBytes(storageRef, file);
-      const downloadURL: string = await getDownloadURL(ref(storage, `${saveStorageDirectory}/${file.name}`));
+      const getUploadURI: string = await getDownloadURL(ref(storage, `${saveStorageDirectory}/${file.name}`));
 
-      setImagesURI([ ...imagesURI, downloadURL ]);
+      setImagesURI([ ...imagesURI, getUploadURI ]);
 
     } catch (error: unknown) {
 
