@@ -16,7 +16,7 @@ import { Routing } from "../../../router/routing";
 import styles from "./PasswordReset.module.scss";
 
 // - 子コンポーネント =====================================================================================================
-import { InputField } from "../../atoms/InputField/InputField";
+import { InputField } from "../../atoms/control/InputField/InputField";
 import { LoadingOverlay } from "../../atoms/LoadingOverlay/LoadingOverlay";
 
 // - バリデーション =======================================================================================================

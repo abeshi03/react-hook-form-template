@@ -6,8 +6,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./PostAddingControlGroup.module.scss";
 
 // - 子コンポーネント =====================================================================================================
-import { Textarea } from "../../../atoms/Textarea/Textarea";
-import { ImageUploader } from "../../../atoms/ImageUploader/ImageUploader";
+import { Textarea } from "../../../atoms/control/Textarea/Textarea";
+import { ImageUploader } from "../../../atoms/control/ImageUploader/ImageUploader";
 
 // - バリデーション =======================================================================================================
 import {
