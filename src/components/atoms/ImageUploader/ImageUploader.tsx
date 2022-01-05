@@ -159,11 +159,7 @@ export const ImageUploader: VFC<Props> = memo((props) => {
 
   // - 画像削除処理 ======================================================================================================
   const deleteImage = (targetImageIndex: number): void => {
-
-    let newArray: string[] = [ ...imagesURI ];
-    newArray.splice(targetImageIndex, 1);
-
-    setImagesURI(newArray);
+    setImagesURI(prevArray => prevArray.splice(targetImageIndex, 1));
   }
 
 
