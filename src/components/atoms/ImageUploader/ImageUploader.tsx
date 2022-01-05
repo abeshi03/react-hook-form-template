@@ -121,38 +121,29 @@ export const ImageUploader: VFC<Props> = memo((props) => {
     const storageRef = ref(storage, `${saveStorageDirectory}/${file.name}`)
 
     // - 画像アップロード処理 ==============================================================================================
-    await uploadBytes(storageRef, file)
-      .then(() => {
-        // - アップロードした画像URIの取得処理
-        getDownloadURL(ref(storage, `${saveStorageDirectory}/${file.name}`))
-          .then((imageURI: string) => {
-            setImagesURI([...imagesURI, imageURI ])
-          })
-          .catch((error: unknown) => {
-            console.log(error);
-            console.log("画像の取得に失敗しました")
+    try {
 
-            dispatch(displayFloatingNotificationBar({
-              notification: {
-                type: "ERROR",
-                message: "ファイルアップロード中不具合が発生いたしました。"
-              }
-            }));
-          })
-      })
-      .catch((error: unknown) => {
-        console.log(error)
-        console.log("アップロードに失敗しました")
-        dispatch(displayFloatingNotificationBar({
-          notification: {
-            type: "ERROR",
-            message: "ファイルアップロード中不具合が発生いたしました。"
-          }
-        }));
-      })
-      .finally(() => {
-        setIsDisplayOverlay(false);
-      })
+      await uploadBytes(storageRef, file);
+      const downloadURL: string = await getDownloadURL(ref(storage, `${saveStorageDirectory}/${file.name}`));
+
+      setImagesURI([ ...imagesURI, downloadURL ]);
+
+    } catch (error: unknown) {
+
+      console.log(error);
+      console.log("uploadBytes, getDownloadURL: アップロード処理に失敗いたしました。")
+
+      dispatch(displayFloatingNotificationBar({
+        notification: {
+          type: "ERROR",
+          message: "ファイルアップロード中不具合が発生いたしました。"
+        }
+      }));
+
+    } finally {
+
+      setIsDisplayOverlay(false);
+    }
   }
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
