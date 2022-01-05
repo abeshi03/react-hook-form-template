@@ -14,5 +14,11 @@ export const Routing = {
   passwordReset: {
     path: "/password_reset",
     pageName: "パスワード再設定"
+  },
+  post: {
+    add: {
+      path: "/post/add",
+      pageName: "投稿追加"
+    }
   }
 }

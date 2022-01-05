@@ -48,7 +48,7 @@ export const FloatingNotificationBar: VFC = memo(() => {
     if (state.notification) {
       const hiddenTimer = setTimeout(() => {
         dispatch(hiddenFloatingNotificationBar());
-      }, 3000)
+      }, 5000)
 
       return () => {
         clearTimeout(hiddenTimer);
