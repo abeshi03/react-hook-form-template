@@ -14,6 +14,13 @@ export const userValidations = {
     required: true,
     minLength: 6,
     maxLength: 36
+  },
+
+  avatarImage: {
+    required: false,
+    accept: ".png, .jpeg",
+    supportedImagesFileExtensions: [ "png", "jpeg", "jpg" ], // アップロードのバリデーションの為にacceptと両方必要
+    maximalImagesCount: 1
   }
 };
 
