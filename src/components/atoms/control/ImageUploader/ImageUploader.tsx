@@ -13,10 +13,14 @@ import styles from "./ImageUploader.module.scss";
 import { ImageAddingIcon } from "../../../../assets/icons/ImageAddingIcon";
 import { ImageDeletingIcon } from "../../../../assets/icons/ImageDeletingIcon";
 
+// - 子コンポーネント =====================================================================================================
+import { InputLabel } from "../InputLabel/InputLabel";
+
 // - 補助関数 ============================================================================================================
 import { isUndefined } from "../../../../utils/isUndefined";
 import { isNotUndefined } from "../../../../utils/isNotUndefined";
 import { isNull } from "../../../../utils/isNull";
+
 
 type Props = {
   label?: string;
@@ -156,10 +160,11 @@ export const ImageUploader: VFC<Props> = memo((props) => {
 
   return (
     <>
-      <div className={styles.labelAndRequiredBadge}>
-        {label && <label htmlFor={label} className={styles.label}>{label}</label>}
-        {required && <span className={styles.requiredBadge}>必須</span>}
-      </div>
+      <InputLabel
+        required={required}
+        label={label}
+      />
+
       <div className={styles.imageUploadArea} {...getRootProps()}>
 
         <div className={styles.uploadButton} role="button">

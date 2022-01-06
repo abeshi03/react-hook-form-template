@@ -4,6 +4,9 @@ import React, { memo, VFC } from "react";
 // - アセット ============================================================================================================
 import styles from "./Textarea.module.scss";
 
+// - 子コンポーネント =====================================================================================================
+import { InputLabel } from "../InputLabel/InputLabel";
+
 
 type Props = {
   label?: string;
@@ -35,10 +38,12 @@ export const Textarea: VFC<Props> = memo((props) => {
 
   return (
     <div className={styles.textareaContainer}>
-      <div className={styles.labelAndRequiredBadge}>
-        {label && <label htmlFor={label} className={styles.label}>{label}</label>}
-        {required && <span className={styles.requiredBadge}>必須</span>}
-      </div>
+
+      <InputLabel
+        required={required}
+        label={label}
+      />
+
       <textarea
         { ...inputProps }
         className={styles.textarea}
