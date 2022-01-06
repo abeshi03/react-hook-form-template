@@ -14,11 +14,16 @@ import { Routing } from "../../../../router/routing";
 
 // - アセット ===========================================================================================================
 import styles from "./SignUpControlGroup.module.scss";
+import { commonStaticStrings } from "../../../../config/commonStaticStrings";
+
+// - 型定義 =============================================================================================================
+import { Genders } from "../../../../types/User";
 
 // - 子コンポーネント =====================================================================================================
 import { InputField } from "../../../atoms/control/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
 import { ImageUploader } from "../../../atoms/control/ImageUploader/ImageUploader";
+import { SelectField, SelectFieldType } from "../../../atoms/control/SelectField/SelectField";
 
 // - バリデーション =======================================================================================================
 import {
@@ -31,14 +36,25 @@ import {
 // - ストレージ ==========================================================================================================
 import { imageUploadedStorage } from "../../../../config/imageUploadedStorage";
 
+
 // - inputState ========================================================================================================
 export type SignUpInputValues = {
   email: string;
   password: string;
   userName: string;
   avatarImageURI?: string;
+  gender: Genders;
 };
-// - ===================================================================================================================
+
+
+// - セレクトフィールド ===================================================================================================
+const getGendersSelectOptions = (): SelectFieldType[] => {
+  const genders = Object.values(Genders);
+  return genders.map((gender: Genders): SelectFieldType => ({
+    key: gender,
+    label: commonStaticStrings.gender(gender)
+  }))
+}
 
 
 export const SignUpControlGroup: VFC = memo(() => {
@@ -133,6 +149,17 @@ export const SignUpControlGroup: VFC = memo(() => {
             autoComplete="text"
           />
           {errors.userName && userNameErrorMessages(errors.userName)}
+        </div>
+
+        <div className={styles.inputContainer}>
+          <SelectField
+            required={true}
+            emptySelect
+            selectOptions={getGendersSelectOptions()}
+            inputProps={register("gender", {
+              required: true
+            })}
+          />
         </div>
 
         <div className={styles.inputContainer}>

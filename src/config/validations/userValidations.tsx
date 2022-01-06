@@ -22,6 +22,10 @@ export const userValidations = {
     maxLength: 30
   },
 
+  gender: {
+    required: true
+  },
+
   avatarImage: {
     required: false,
     accept: ".png, .jpeg",
