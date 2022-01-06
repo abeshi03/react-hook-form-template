@@ -24,7 +24,8 @@ import { ImageUploader } from "../../../atoms/control/ImageUploader/ImageUploade
 import {
   userValidations,
   emailErrorMessages,
-  passwordErrorMessages
+  passwordErrorMessages,
+  userNameErrorMessages
 } from "../../../../config/validations/userValidations";
 
 // - ストレージ ==========================================================================================================
@@ -34,6 +35,7 @@ import { imageUploadedStorage } from "../../../../config/imageUploadedStorage";
 export type SignUpInputValues = {
   email: string;
   password: string;
+  userName: string;
   avatarImageURI?: string;
 };
 // - ===================================================================================================================
@@ -115,6 +117,22 @@ export const SignUpControlGroup: VFC = memo(() => {
             autoComplete="new-password"
           />
           {errors.password && passwordErrorMessages(errors.password)}
+        </div>
+
+        <div className={styles.inputContainer}>
+          <InputField
+            type="text"
+            required={userValidations.userName.required}
+            label="ユーザー名"
+            placeholder="ユーザー名を入力してください"
+            inputProps={register("userName",{
+              required: userValidations.userName.required,
+              minLength: userValidations.userName.minLength,
+              maxLength: userValidations.userName.maxLength
+            })}
+            autoComplete="text"
+          />
+          {errors.userName && userNameErrorMessages(errors.userName)}
         </div>
 
         <div className={styles.inputContainer}>

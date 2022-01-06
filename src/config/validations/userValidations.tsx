@@ -16,6 +16,12 @@ export const userValidations = {
     maxLength: 36
   },
 
+  userName: {
+    required: true,
+    minLength: 1,
+    maxLength: 30
+  },
+
   avatarImage: {
     required: false,
     accept: ".png, .jpeg",
@@ -47,4 +53,17 @@ export const passwordErrorMessages = (error: FieldError) => {
       </span>
   }
 };
+
+export const userNameErrorMessages = (error: FieldError) => {
+  switch (error.type) {
+
+    case "required": return <span className="errorMessage">ユーザー名は必須です</span>;
+
+    case "minLength": return <span className="errorMessage">
+      {`ユーザー名は${userValidations.userName.minLength}~${userValidations.userName.maxLength}文字で入力してください`}</span>;
+
+    case "maxLength": return <span className="errorMessage">
+      {`ユーザー名は${userValidations.userName.minLength}~${userValidations.userName.maxLength}文字で入力してください`}</span>;
+  }
+}
 
