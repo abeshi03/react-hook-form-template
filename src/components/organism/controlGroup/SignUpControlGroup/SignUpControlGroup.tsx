@@ -18,6 +18,7 @@ import styles from "./SignUpControlGroup.module.scss";
 // - 子コンポーネント =====================================================================================================
 import { InputField } from "../../../atoms/control/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
+import { ImageUploader } from "../../../atoms/control/ImageUploader/ImageUploader";
 
 // - バリデーション =======================================================================================================
 import {
@@ -26,10 +27,14 @@ import {
   passwordErrorMessages
 } from "../../../../config/validations/userValidations";
 
+// - ストレージ ==========================================================================================================
+import { imageUploadedStorage } from "../../../../config/imageUploadedStorage";
+
 // - inputState ========================================================================================================
 export type SignUpInputValues = {
-  email: string,
-  password: string
+  email: string;
+  password: string;
+  avatarImageURI?: string;
 };
 // - ===================================================================================================================
 
@@ -110,6 +115,19 @@ export const SignUpControlGroup: VFC = memo(() => {
             autoComplete="new-password"
           />
           {errors.password && passwordErrorMessages(errors.password)}
+        </div>
+
+        <div className={styles.inputContainer}>
+          <ImageUploader
+            label="アバター画像"
+            required={userValidations.avatarImage.required}
+            supportedImagesFileExtensions={userValidations.avatarImage.supportedImagesFileExtensions}
+            saveStorageDirectory={imageUploadedStorage.user.avatar}
+            maximalImagesCount={userValidations.avatarImage.maximalImagesCount}
+            inputProps={register("avatarImageURI", {
+              required: userValidations.avatarImage.required
+            })}
+          />
         </div>
 
         <button type="submit" disabled={isDisabled}>送信</button>
