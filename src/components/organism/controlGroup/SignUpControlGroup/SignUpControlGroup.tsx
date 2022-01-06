@@ -156,6 +156,7 @@ export const SignUpControlGroup: VFC = memo(() => {
           <SelectField
             required={true}
             emptySelect
+            emptySelectString="性別を選択"
             selectOptions={getGendersSelectOptions()}
             inputProps={register("gender", {
               required: true

@@ -19,6 +19,7 @@ type Props = {
   disabled?: boolean;
   selectOptions: SelectFieldType[];
   emptySelect?: boolean;
+  emptySelectString?: string;
   inputProps: React.HTMLAttributes<HTMLSelectElement>;
 }
 
@@ -32,6 +33,7 @@ export const SelectField: VFC<Props> = memo((props) => {
     disabled,
     selectOptions,
     emptySelect = false,
+    emptySelectString,
     inputProps
   } = props;
 
@@ -47,7 +49,7 @@ export const SelectField: VFC<Props> = memo((props) => {
         className={styles.selectField}
         disabled={disabled}
       >
-        {emptySelect && <option value="">未選択</option>}
+        {emptySelect && <option value="">{ emptySelectString ? emptySelectString : "未選択" }</option>}
         {selectOptions.map((selectOption: SelectFieldType) => (
           <option
             key={selectOption.key}
