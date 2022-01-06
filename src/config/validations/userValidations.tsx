@@ -69,5 +69,11 @@ export const userNameErrorMessages = (error: FieldError) => {
     case "maxLength": return <span className="errorMessage">
       {`ユーザー名は${userValidations.userName.minLength}~${userValidations.userName.maxLength}文字で入力してください`}</span>;
   }
+};
+
+export const genderErrorMessages = (error: FieldError) => {
+  switch (error.type) {
+    case "required": return <span className="errorMessage">性別は必須です</span>;
+  }
 }
 

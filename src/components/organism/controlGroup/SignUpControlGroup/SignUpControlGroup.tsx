@@ -30,7 +30,8 @@ import {
   userValidations,
   emailErrorMessages,
   passwordErrorMessages,
-  userNameErrorMessages
+  userNameErrorMessages,
+  genderErrorMessages
 } from "../../../../config/validations/userValidations";
 
 // - ストレージ ==========================================================================================================
@@ -160,6 +161,7 @@ export const SignUpControlGroup: VFC = memo(() => {
               required: true
             })}
           />
+          {errors.gender && genderErrorMessages(errors.gender)}
         </div>
 
         <div className={styles.inputContainer}>
