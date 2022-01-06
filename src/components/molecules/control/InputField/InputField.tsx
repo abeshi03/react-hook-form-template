@@ -6,7 +6,7 @@ import React, { memo, VFC } from "react";
 import styles from "./InputField.module.scss";
 
 // - 子コンポーネント =====================================================================================================
-import { InputLabel } from "../InputLabel/InputLabel";
+import { InputLabel } from "../../../atoms/InputLabel/InputLabel";
 
 type InputFiledType = "text" | "password" | "email";
 

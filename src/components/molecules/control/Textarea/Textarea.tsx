@@ -5,7 +5,7 @@ import React, { memo, VFC } from "react";
 import styles from "./Textarea.module.scss";
 
 // - 子コンポーネント =====================================================================================================
-import { InputLabel } from "../InputLabel/InputLabel";
+import { InputLabel } from "../../../atoms/InputLabel/InputLabel";
 
 
 type Props = {

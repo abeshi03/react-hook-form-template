@@ -16,7 +16,7 @@ import { displayFloatingNotificationBar } from "../../../../features/floatingNot
 import styles from "./SignInControlGroup.module.scss";
 
 // - 子コンポーネント =====================================================================================================
-import { InputField } from "../../../atoms/control/InputField/InputField";
+import { InputField } from "../../../molecules/control/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
 
 // - バリデーション =======================================================================================================

@@ -14,7 +14,7 @@ import { ImageAddingIcon } from "../../../../assets/icons/ImageAddingIcon";
 import { ImageDeletingIcon } from "../../../../assets/icons/ImageDeletingIcon";
 
 // - 子コンポーネント =====================================================================================================
-import { InputLabel } from "../InputLabel/InputLabel";
+import { InputLabel } from "../../../atoms/InputLabel/InputLabel";
 
 // - 補助関数 ============================================================================================================
 import { isUndefined } from "../../../../utils/isUndefined";

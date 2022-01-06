@@ -22,10 +22,10 @@ import { Genders } from "../../../../types/User";
 import SelectField from "../../../../types/SelectField";
 
 // - 子コンポーネント =====================================================================================================
-import { InputField } from "../../../atoms/control/InputField/InputField";
+import { InputField } from "../../../molecules/control/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
-import { ImageUploader } from "../../../atoms/control/ImageUploader/ImageUploader";
-import { InputLabel } from "../../../atoms/control/InputLabel/InputLabel";
+import { ImageUploader } from "../../../molecules/control/ImageUploader/ImageUploader";
+import { InputLabel } from "../../../atoms/InputLabel/InputLabel";
 
 // - バリデーション =======================================================================================================
 import {
