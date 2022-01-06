@@ -2,7 +2,8 @@
 import React, { memo, VFC, useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import Select from "react-select";
 
 // - グローバルstate =====================================================================================================
 import { useDispatch } from "react-redux";
@@ -18,12 +19,12 @@ import { commonStaticStrings } from "../../../../config/commonStaticStrings";
 
 // - 型定義 =============================================================================================================
 import { Genders } from "../../../../types/User";
+import SelectField from "../../../../types/SelectField";
 
 // - 子コンポーネント =====================================================================================================
 import { InputField } from "../../../atoms/control/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
 import { ImageUploader } from "../../../atoms/control/ImageUploader/ImageUploader";
-import { SelectField, SelectFieldType } from "../../../atoms/control/SelectField/SelectField";
 
 // - バリデーション =======================================================================================================
 import {
@@ -49,18 +50,18 @@ export type SignUpInputValues = {
 
 
 // - セレクトフィールド ===================================================================================================
-const getGendersSelectOptions = (): SelectFieldType[] => {
+const getGendersSelectOptions = (): SelectField.Option[] => {
   const genders = Object.values(Genders);
-  return genders.map((gender: Genders): SelectFieldType => ({
-    key: gender,
-    label: commonStaticStrings.gender(gender)
+  return genders.map((gender: Genders): SelectField.Option => ({
+    label: commonStaticStrings.gender(gender),
+    value: gender
   }))
 }
 
 
 export const SignUpControlGroup: VFC = memo(() => {
 
-  const { register, handleSubmit, formState: { errors } } = useForm<SignUpInputValues>();
+  const { register, handleSubmit, control, formState: { errors } } = useForm<SignUpInputValues>();
 
   const [ isDisabled, setIsDisabled ] = useState(false);
   const [ isDisplayLoadingOverlay, setIsDisplayLoadingOverlay ] = useState(false);
@@ -153,14 +154,19 @@ export const SignUpControlGroup: VFC = memo(() => {
         </div>
 
         <div className={styles.inputContainer}>
-          <SelectField
-            required={true}
-            emptySelect
-            emptySelectString="性別を選択"
-            selectOptions={getGendersSelectOptions()}
-            inputProps={register("gender", {
-              required: true
-            })}
+          <Controller
+            control={control}
+            name="gender"
+            rules={{ required: true }}
+            render={({ field: { onChange, onBlur, ref } }) => (
+              <Select
+                placeholder="性別を選択"
+                options={getGendersSelectOptions()}
+                onBlur={onBlur}
+                ref={ref}
+                onChange={onChange}
+              />
+            )}
           />
           {errors.gender && genderErrorMessages(errors.gender)}
         </div>
