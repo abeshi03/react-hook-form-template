@@ -25,6 +25,7 @@ import SelectField from "../../../../types/SelectField";
 import { InputField } from "../../../atoms/control/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
 import { ImageUploader } from "../../../atoms/control/ImageUploader/ImageUploader";
+import { InputLabel } from "../../../atoms/control/InputLabel/InputLabel";
 
 // - バリデーション =======================================================================================================
 import {
@@ -154,10 +155,15 @@ export const SignUpControlGroup: VFC = memo(() => {
         </div>
 
         <div className={styles.inputContainer}>
+          <InputLabel
+            required={userValidations.gender.required}
+            label="性別"
+            style={{marginBottom: "10px"}}
+          />
           <Controller
             control={control}
             name="gender"
-            rules={{ required: true }}
+            rules={{ required: userValidations.gender.required }}
             render={({ field: { onChange, onBlur, ref } }) => (
               <Select
                 placeholder="性別を選択"
