@@ -2,7 +2,8 @@
 import React, { memo, VFC, useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import Select from "react-select";
 
 // - グローバルstate =====================================================================================================
 import { useDispatch } from "react-redux";
@@ -14,29 +15,56 @@ import { Routing } from "../../../../router/routing";
 
 // - アセット ===========================================================================================================
 import styles from "./SignUpControlGroup.module.scss";
+import { commonStaticStrings } from "../../../../config/commonStaticStrings";
+import { selectCustomTheme } from "../../../../lib/reactSelect/styles";
+import { selectCustomStyles } from "../../../../lib/reactSelect/styles";
+
+// - 型定義 =============================================================================================================
+import { Genders } from "../../../../types/User";
+import SelectField from "../../../../lib/reactSelect/type";
 
 // - 子コンポーネント =====================================================================================================
-import { InputField } from "../../../atoms/control/InputField/InputField";
+import { InputField } from "../../../molecules/control/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
+import { ImageUploader } from "../../../molecules/control/ImageUploader/ImageUploader";
+import { InputLabel } from "../../../atoms/InputLabel/InputLabel";
 
 // - バリデーション =======================================================================================================
 import {
   userValidations,
   emailErrorMessages,
-  passwordErrorMessages
+  passwordErrorMessages,
+  userNameErrorMessages,
+  genderErrorMessages
 } from "../../../../config/validations/userValidations";
+
+// - ストレージ ==========================================================================================================
+import { imageUploadedStorage } from "../../../../config/imageUploadedStorage";
+
 
 // - inputState ========================================================================================================
 export type SignUpInputValues = {
-  email: string,
-  password: string
+  email: string;
+  password: string;
+  userName: string;
+  avatarImageURI?: string;
+  gender: Genders;
 };
-// - ===================================================================================================================
+
+
+// - セレクトフィールド ===================================================================================================
+const getGendersSelectOptions = (): SelectField.Option[] => {
+  const genders = Object.values(Genders);
+  return genders.map((gender: Genders): SelectField.Option => ({
+    label: commonStaticStrings.gender(gender),
+    value: gender
+  }))
+}
 
 
 export const SignUpControlGroup: VFC = memo(() => {
 
-  const { register, handleSubmit, formState: { errors } } = useForm<SignUpInputValues>();
+  const { register, handleSubmit, control, formState: { errors } } = useForm<SignUpInputValues>();
 
   const [ isDisabled, setIsDisabled ] = useState(false);
   const [ isDisplayLoadingOverlay, setIsDisplayLoadingOverlay ] = useState(false);
@@ -110,6 +138,60 @@ export const SignUpControlGroup: VFC = memo(() => {
             autoComplete="new-password"
           />
           {errors.password && passwordErrorMessages(errors.password)}
+        </div>
+
+        <div className={styles.inputContainer}>
+          <InputLabel
+            required={userValidations.gender.required}
+            label="性別"
+            style={{marginBottom: "10px"}}
+          />
+          <Controller
+            control={control}
+            name="gender"
+            rules={{ required: userValidations.gender.required }}
+            render={({ field: { onChange, onBlur, ref } }) => (
+              <Select
+                placeholder="性別を選択"
+                options={getGendersSelectOptions()}
+                theme={selectCustomTheme}
+                styles={selectCustomStyles}
+                onBlur={onBlur}
+                ref={ref}
+                onChange={onChange}
+              />
+            )}
+          />
+          {errors.gender && genderErrorMessages(errors.gender)}
+        </div>
+
+        <div className={styles.inputContainer}>
+          <InputField
+            type="text"
+            required={userValidations.userName.required}
+            label="ユーザー名"
+            placeholder="ユーザー名を入力してください"
+            inputProps={register("userName",{
+              required: userValidations.userName.required,
+              minLength: userValidations.userName.minLength,
+              maxLength: userValidations.userName.maxLength
+            })}
+            autoComplete="text"
+          />
+          {errors.userName && userNameErrorMessages(errors.userName)}
+        </div>
+
+        <div className={styles.inputContainer}>
+          <ImageUploader
+            label="アバター画像"
+            required={userValidations.avatarImage.required}
+            supportedImagesFileExtensions={userValidations.avatarImage.supportedImagesFileExtensions}
+            saveStorageDirectory={imageUploadedStorage.user.avatar}
+            maximalImagesCount={userValidations.avatarImage.maximalImagesCount}
+            inputProps={register("avatarImageURI", {
+              required: userValidations.avatarImage.required
+            })}
+          />
         </div>
 
         <button type="submit" disabled={isDisabled}>送信</button>

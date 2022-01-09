@@ -16,7 +16,7 @@ import { displayFloatingNotificationBar } from "../../../../features/floatingNot
 import styles from "./SignInControlGroup.module.scss";
 
 // - 子コンポーネント =====================================================================================================
-import { InputField } from "../../../atoms/control/InputField/InputField";
+import { InputField } from "../../../molecules/control/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
 
 // - バリデーション =======================================================================================================
@@ -28,13 +28,17 @@ import {
 
 // - inputState ========================================================================================================
 export type SignInInputValues = {
-  email: string,
-  password: string
+  email: string;
+  password: string;
 };
 // - ===================================================================================================================
 
 
-export const SignInControlGroup: VFC = memo(() => {
+type Props = {
+  redirectPath?: string;
+}
+
+export const SignInControlGroup: VFC<Props> = memo((props) => {
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignInInputValues>();
 
@@ -45,34 +49,37 @@ export const SignInControlGroup: VFC = memo(() => {
   const dispatch = useDispatch();
 
 
-  const signIn: SubmitHandler<SignInInputValues> = (inputValue): void => {
+  const signIn: SubmitHandler<SignInInputValues> = async (inputValue): Promise<void> => {
 
     setIsDisabled(true);
     setIsDisplayLoadingOverlay(true);
 
-    signInWithEmailAndPassword(auth, inputValue.email, inputValue.password)
-      .then(() => {
-        navigate(Routing.top.path);
-        dispatch(displayFloatingNotificationBar({
-          notification: {
-            type: "SUCCESS",
-            message: "ログインしました！"
-          }
-        }));
-      })
-      .catch((error: unknown) => {
-        console.log(error);
-        dispatch(displayFloatingNotificationBar({
-          notification: {
-            type: "ERROR",
-            message: "ログインに失敗いたしました。メールアドレス、パスワードをご確認ください。"
-          }
-        }));
-      })
-      .finally(() => {
-        setIsDisabled(false);
-        setIsDisplayLoadingOverlay(false);
-      })
+    try {
+
+      await signInWithEmailAndPassword(auth, inputValue.email, inputValue.password);
+
+      navigate(Routing.top.path);
+
+      dispatch(displayFloatingNotificationBar({
+        notification: {
+          type: "SUCCESS",
+          message: "ログインしました！"
+        }
+      }));
+    } catch (error: unknown) {
+
+      console.log(error);
+      dispatch(displayFloatingNotificationBar({
+        notification: {
+          type: "ERROR",
+          message: "ログインに失敗いたしました。メールアドレス、パスワードをご確認ください。"
+        }
+      }));
+
+    } finally {
+      setIsDisabled(false);
+      setIsDisplayLoadingOverlay(false);
+    }
   }
 
   return (

@@ -2,6 +2,9 @@
 import React from "react";
 import { FieldError } from "react-hook-form";
 
+// - 子コンポーネント =====================================================================================================
+import { ErrorMessage } from "../../components/atoms/ErrorMessage/ErrorMessage";
+
 
 // - バリデーション =======================================================================================================
 export const postValidations = {
@@ -26,19 +29,21 @@ export const postValidations = {
 export const descriptionErrorMessage = (error: FieldError) => {
   switch (error.type) {
 
-    case "required": return <span className="errorMessage">投稿内容は必須です</span>;
+    case "required": return <ErrorMessage message="投稿内容は必須です"/>;
 
-    case "minLength": return <span className="errorMessage">
-      {`投稿内容は${postValidations.description.minLength}~${postValidations.description.maxLength}文字で入力してください`}</span>;
+    case "minLength": return <ErrorMessage
+      message={`投稿内容は${postValidations.description.minLength}~${postValidations.description.maxLength}文字で入力してください`}
+    />;
 
-    case "maxLength": return <span className="errorMessage">
-      {`投稿内容は${postValidations.description.minLength}~${postValidations.description.maxLength}文字で入力してください`}</span>;
+    case "maxLength": return <ErrorMessage
+      message={`投稿内容は${postValidations.description.minLength}~${postValidations.description.maxLength}文字で入力してください`}
+    />;
   }
 };
 
 export const imageErrorMessage = (error: FieldError) => {
   switch (error.type) {
 
-    case "required": return <span className="errorMessage">画像は必須です</span>;
+    case "required": return <ErrorMessage message="画像は必須です"/>;
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import "./assets/styles/global/errorMessage.scss";
 import App from './App';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { SignUp } from "./components/pages/SignUp/SignUp";

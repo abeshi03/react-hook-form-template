@@ -26,7 +26,15 @@ export const PostAddingPage: VFC = memo(() => {
 
   useEffect(() => {
     if (!isLogin) {
-      // TODO
+      navigate(Routing.signIn.path, {
+        state: { redirectPath: Routing.post.add.path }
+      });
+      dispatch(displayFloatingNotificationBar({
+        notification: {
+          type: "WARNING",
+          message: "ログインしてください"
+        }
+      }));
     }
   })
 

@@ -1,3 +1,6 @@
 export const imageUploadedStorage = {
-  posts: "/posts"
+  posts: "/posts",
+  user: {
+    avatar: "/users/avatar"
+  }
 }

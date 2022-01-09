@@ -1,50 +1,55 @@
-// - フレームワーク, ライブラリー ===========================================================================================
+// - フレームワーク =======================================================================================================
 import React, { memo, VFC } from "react";
 
-
 // - アセット ============================================================================================================
-import styles from "./InputField.module.scss";
+import styles from "./Textarea.module.scss";
 
-type InputFiledType = "text" | "password" | "email";
+// - 子コンポーネント =====================================================================================================
+import { InputLabel } from "../../../atoms/InputLabel/InputLabel";
+
 
 type Props = {
   label?: string;
   placeholder?: string;
-  type: InputFiledType;
   required: boolean;
   guidance?: string;
   disabled?: boolean;
   defaultValue?: string;
   autoComplete?: string;
-  inputProps: React.HTMLAttributes<HTMLInputElement>;
+  rows?: number;
+  cols?: number;
+  inputProps: React.HTMLAttributes<HTMLTextAreaElement>;
 }
 
-
-export const InputField: VFC<Props> = memo((props) => {
+export const Textarea: VFC<Props> = memo((props) => {
 
   const {
     label,
     placeholder,
-    type,
     required,
     guidance,
     disabled = false,
     defaultValue,
     autoComplete,
+    rows,
+    cols,
     inputProps
   } = props;
 
   return (
-    <div className={styles.inputFieldContainer}>
-      <div className={styles.labelAndRequiredBadge}>
-        {label && <label htmlFor={label} className={styles.label}>{label}</label>}
-        {required && <span className={styles.requiredBadge}>必須</span>}
-      </div>
-      <input
+    <div className={styles.textareaContainer}>
+
+      <InputLabel
+        required={required}
+        label={label}
+      />
+
+      <textarea
         { ...inputProps }
-        className={styles.inputField}
+        className={styles.textarea}
+        rows={rows}
+        cols={cols}
         defaultValue={defaultValue}
-        type={type}
         placeholder={placeholder}
         disabled={disabled}
         autoComplete={autoComplete}
