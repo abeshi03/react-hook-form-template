@@ -2,6 +2,9 @@
 import React from "react";
 import { FieldError } from "react-hook-form";
 
+// - 子コンポーネント =====================================================================================================
+import { ErrorMessage } from "../../components/atoms/ErrorMessage/ErrorMessage";
+
 // - バリデーション =======================================================================================================
 export const userValidations = {
 
@@ -38,42 +41,44 @@ export const userValidations = {
 // - エラーメッセージ =====================================================================================================
 export const emailErrorMessages = (error: FieldError) => {
   switch (error.type) {
-    case "required": return <span className="errorMessage">メールアドレスは必須です</span>;
-    case "pattern": return <span className="errorMessage">不正なメールアドレスです。(正しい例: example@example.com)</span>;
+    case "required": return <ErrorMessage message="メールアドレスは必須です"/>;
+    case "pattern": return <ErrorMessage message="不正なメールアドレスです。(正しい例: example@example.com)"/>;
   }
 };
 
 export const passwordErrorMessages = (error: FieldError) => {
   switch (error.type) {
 
-    case "required": return <span className="errorMessage">パスワードは必須です</span>;
+    case "required": return <ErrorMessage message="パスワードは必須です"/>;
 
-    case "minLength": return <span className="errorMessage">
-      {`パスワードは${userValidations.password.minLength}〜${userValidations.password.maxLength}文字で入力してください`}
-      </span>;
+    case "minLength": return <ErrorMessage
+      message={`パスワードは${userValidations.password.minLength}〜${userValidations.password.maxLength}文字で入力してください`}
+    />;
 
-    case "maxLength": return <span className="errorMessage">
-        {`パスワードは${userValidations.password.minLength}〜${userValidations.password.maxLength}文字で入力してください`}
-      </span>
+    case "maxLength": return <ErrorMessage
+      message={`パスワードは${userValidations.password.minLength}〜${userValidations.password.maxLength}文字で入力してください`}
+    />;
   }
 };
 
 export const userNameErrorMessages = (error: FieldError) => {
   switch (error.type) {
 
-    case "required": return <span className="errorMessage">ユーザー名は必須です</span>;
+    case "required": return <ErrorMessage message="ユーザー名は必須です"/>;
 
-    case "minLength": return <span className="errorMessage">
-      {`ユーザー名は${userValidations.userName.minLength}~${userValidations.userName.maxLength}文字で入力してください`}</span>;
+    case "minLength": return <ErrorMessage
+      message={`ユーザー名は${userValidations.userName.minLength}~${userValidations.userName.maxLength}文字で入力してください`}
+    />;
 
-    case "maxLength": return <span className="errorMessage">
-      {`ユーザー名は${userValidations.userName.minLength}~${userValidations.userName.maxLength}文字で入力してください`}</span>;
+    case "maxLength": return <ErrorMessage
+      message={`ユーザー名は${userValidations.userName.minLength}~${userValidations.userName.maxLength}文字で入力してください`}
+    />;
   }
 };
 
 export const genderErrorMessages = (error: FieldError) => {
   switch (error.type) {
-    case "required": return <span className="errorMessage">性別は必須です</span>;
+    case "required": return <ErrorMessage message="性別必須です"/>;
   }
 }
 
