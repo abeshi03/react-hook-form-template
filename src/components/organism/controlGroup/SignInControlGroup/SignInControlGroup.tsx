@@ -26,9 +26,6 @@ import {
   userValidations
 } from "../../../../config/validations/userValidations";
 
-// - 補助関数 ===========================================================================================================
-import { isNotUndefined } from "../../../../utils/isNotUndefined";
-
 // - inputState ========================================================================================================
 export type SignInInputValues = {
   email: string;
@@ -42,8 +39,6 @@ type Props = {
 }
 
 export const SignInControlGroup: VFC<Props> = memo((props) => {
-
-  const { redirectPath } = props;
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignInInputValues>();
 
