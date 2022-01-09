@@ -16,10 +16,12 @@ import { Routing } from "../../../../router/routing";
 // - アセット ===========================================================================================================
 import styles from "./SignUpControlGroup.module.scss";
 import { commonStaticStrings } from "../../../../config/commonStaticStrings";
+import { selectCustomTheme } from "../../../../lib/reactSelect/styles";
+import { selectCustomStyles } from "../../../../lib/reactSelect/styles";
 
 // - 型定義 =============================================================================================================
 import { Genders } from "../../../../types/User";
-import SelectField from "../../../../types/SelectField";
+import SelectField from "../../../../lib/reactSelect/type";
 
 // - 子コンポーネント =====================================================================================================
 import { InputField } from "../../../molecules/control/InputField/InputField";
@@ -139,22 +141,6 @@ export const SignUpControlGroup: VFC = memo(() => {
         </div>
 
         <div className={styles.inputContainer}>
-          <InputField
-            type="text"
-            required={userValidations.userName.required}
-            label="ユーザー名"
-            placeholder="ユーザー名を入力してください"
-            inputProps={register("userName",{
-              required: userValidations.userName.required,
-              minLength: userValidations.userName.minLength,
-              maxLength: userValidations.userName.maxLength
-            })}
-            autoComplete="text"
-          />
-          {errors.userName && userNameErrorMessages(errors.userName)}
-        </div>
-
-        <div className={styles.inputContainer}>
           <InputLabel
             required={userValidations.gender.required}
             label="性別"
@@ -168,6 +154,8 @@ export const SignUpControlGroup: VFC = memo(() => {
               <Select
                 placeholder="性別を選択"
                 options={getGendersSelectOptions()}
+                theme={selectCustomTheme}
+                styles={selectCustomStyles}
                 onBlur={onBlur}
                 ref={ref}
                 onChange={onChange}
@@ -175,6 +163,22 @@ export const SignUpControlGroup: VFC = memo(() => {
             )}
           />
           {errors.gender && genderErrorMessages(errors.gender)}
+        </div>
+
+        <div className={styles.inputContainer}>
+          <InputField
+            type="text"
+            required={userValidations.userName.required}
+            label="ユーザー名"
+            placeholder="ユーザー名を入力してください"
+            inputProps={register("userName",{
+              required: userValidations.userName.required,
+              minLength: userValidations.userName.minLength,
+              maxLength: userValidations.userName.maxLength
+            })}
+            autoComplete="text"
+          />
+          {errors.userName && userNameErrorMessages(errors.userName)}
         </div>
 
         <div className={styles.inputContainer}>
