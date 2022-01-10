@@ -20,7 +20,7 @@ import { selectCustomTheme } from "../../../../assets/styles/reactSelect";
 import { selectCustomStyles } from "../../../../assets/styles/reactSelect";
 
 // - 型定義 =============================================================================================================
-import { Genders } from "../../../../types/User";
+import {genders, Genders} from "../../../../types/User";
 import SelectField from "../../../../types/ReactSelect";
 
 // - 子コンポーネント =====================================================================================================
@@ -53,14 +53,13 @@ export type SignUpInputValues = {
 
 
 // - セレクトフィールド ===================================================================================================
-const getGendersSelectOptions = (): SelectField.Option[] => {
-  const genders = Object.values(Genders);
-  return genders.map((gender: Genders): SelectField.Option => ({
-    label: formatterStrings.gender(gender),
-    value: gender
+const gendersSelectOptions = (): SelectField.Option[] => {
+  const gendersValue: Genders[] = Object.values(genders);
+  return gendersValue.map((value: Genders) => ({
+    label: formatterStrings.gender(value),
+    value: value
   }))
 }
-
 
 export const SignUpControlGroup: VFC = memo(() => {
 
@@ -153,7 +152,7 @@ export const SignUpControlGroup: VFC = memo(() => {
             render={({ field: { onChange, onBlur, ref } }) => (
               <Select
                 placeholder="性別を選択"
-                options={getGendersSelectOptions()}
+                options={gendersSelectOptions()}
                 theme={selectCustomTheme}
                 styles={selectCustomStyles}
                 onBlur={onBlur}
