@@ -16,12 +16,12 @@ import { Routing } from "../../../../router/routing";
 // - アセット ===========================================================================================================
 import styles from "./SignUpControlGroup.module.scss";
 import { formatterStrings } from "../../../../config/formatterStrings";
-import { selectCustomTheme } from "../../../../lib/reactSelect/styles";
-import { selectCustomStyles } from "../../../../lib/reactSelect/styles";
+import { selectCustomTheme } from "../../../../assets/styles/reactSelect";
+import { selectCustomStyles } from "../../../../assets/styles/reactSelect";
 
 // - 型定義 =============================================================================================================
 import { Genders } from "../../../../types/User";
-import SelectField from "../../../../lib/reactSelect/type";
+import SelectField from "../../../../types/ReactSelect";
 
 // - 子コンポーネント =====================================================================================================
 import { InputField } from "../../../molecules/control/InputField/InputField";
