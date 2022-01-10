@@ -53,12 +53,11 @@ export type SignUpInputValues = {
 
 
 // - セレクトフィールド ===================================================================================================
-const gendersSelectOptions = (): SelectField.Option[] => {
-  return Object.values(genders).map((value: Genders) => ({
+const gendersSelectOptions: SelectField.Option[] =
+  Object.values(genders).map((value: Genders) => ({
     label: formatterStrings.gender(value),
-    value: value
-  }))
-}
+    value
+  }));
 
 export const SignUpControlGroup: VFC = memo(() => {
 
@@ -151,7 +150,7 @@ export const SignUpControlGroup: VFC = memo(() => {
             render={({ field: { onChange, onBlur, ref } }) => (
               <Select
                 placeholder="性別を選択"
-                options={gendersSelectOptions()}
+                options={gendersSelectOptions}
                 theme={selectCustomTheme}
                 styles={selectCustomStyles}
                 onBlur={onBlur}

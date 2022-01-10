@@ -1,4 +1,5 @@
-import {genders, Genders} from "../types/User";
+// - 型定義 =============================================================================================================
+import { genders, Genders } from "../types/User";
 
 export const formatterStrings = {
   gender: function (gender: Genders) {
