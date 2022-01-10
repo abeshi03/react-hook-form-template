@@ -15,7 +15,7 @@ import { Routing } from "../../../../router/routing";
 
 // - アセット ===========================================================================================================
 import styles from "./SignUpControlGroup.module.scss";
-import { commonStaticStrings } from "../../../../config/commonStaticStrings";
+import { formatterStrings } from "../../../../config/formatterStrings";
 import { selectCustomTheme } from "../../../../lib/reactSelect/styles";
 import { selectCustomStyles } from "../../../../lib/reactSelect/styles";
 
@@ -56,7 +56,7 @@ export type SignUpInputValues = {
 const getGendersSelectOptions = (): SelectField.Option[] => {
   const genders = Object.values(Genders);
   return genders.map((gender: Genders): SelectField.Option => ({
-    label: commonStaticStrings.gender(gender),
+    label: formatterStrings.gender(gender),
     value: gender
   }))
 }

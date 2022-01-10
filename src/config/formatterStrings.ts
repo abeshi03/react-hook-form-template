@@ -1,6 +1,6 @@
 import { Genders } from "../types/User";
 
-export const commonStaticStrings = {
+export const formatterStrings = {
   gender: function (gender: Genders) {
     switch (gender) {
       case Genders.male: return "男";
