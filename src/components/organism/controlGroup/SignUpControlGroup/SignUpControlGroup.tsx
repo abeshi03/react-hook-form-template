@@ -54,8 +54,7 @@ export type SignUpInputValues = {
 
 // - セレクトフィールド ===================================================================================================
 const gendersSelectOptions = (): SelectField.Option[] => {
-  const gendersValue: Genders[] = Object.values(genders);
-  return gendersValue.map((value: Genders) => ({
+  return Object.values(genders).map((value: Genders) => ({
     label: formatterStrings.gender(value),
     value: value
   }))

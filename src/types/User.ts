@@ -7,12 +7,6 @@ export type User = {
 }
 
 
-// export enum Genders {
-//   male = "MALE",
-//   female = "FEMALE",
-//   notSpecified = "NOT_SPECIFIED"
-// }
-
 export const genders = {
   male: "MALE",
   female: "FEMALE",
