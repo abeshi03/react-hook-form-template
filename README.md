@@ -89,6 +89,25 @@
 ```
 
 
+### checkbox
+
+
+- [checkbox](src/components/molecules/control/Checkbox)
+
+- 使用例
+
+```tsx
+<Checkbox
+    label="サンプルチェックボックス"
+    required={true}
+    id="checkbox"
+    inputProps={register("checkbox",{
+      required: true
+    })}
+/>
+```
+
+
 ### error-message-template
 
 [ErrorMessage](src/components/atoms/ErrorMessage)
