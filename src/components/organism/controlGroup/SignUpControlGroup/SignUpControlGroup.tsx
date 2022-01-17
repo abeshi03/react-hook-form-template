@@ -195,7 +195,7 @@ export const SignUpControlGroup: VFC = memo(() => {
 
         <div className={styles.inputContainer}>
           <Checkbox
-            label="プライバシーポリシーに同意する"
+            label="サンプルチェックボックス"
             required={true}
             id="checkbox"
             inputProps={register("checkbox",{

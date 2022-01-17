@@ -81,4 +81,3 @@ export const genderErrorMessages = (error: FieldError) => {
     case "required": return <ErrorMessage message="性別必須です"/>;
   }
 }
-
