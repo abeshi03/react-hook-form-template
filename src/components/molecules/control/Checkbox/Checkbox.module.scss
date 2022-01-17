@@ -1,0 +1,50 @@
+.container {
+
+  input[type="checkbox"] { display: none; }
+
+  input[type="checkbox"] + label {
+
+    display: inline-block;
+    padding-left: 35px;
+
+    font-size: 14px;
+    color: black;
+
+    position: relative;
+    cursor: pointer;
+  }
+
+
+  input[type="checkbox"] + label:before {
+
+    display: block;
+
+    width: 20px;
+    height: 20px;
+
+    border: 1px solid black;
+
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    transition: all .12s, border-color .08s;
+  }
+
+  input[type="checkbox"]:checked + label:before {
+
+    width: 10px;
+
+    border-radius: 0;
+    border-top-color: transparent;
+    border-left-color: transparent;
+
+    top: -5px;
+    left: 5px;
+
+    transform: rotate(45deg);
+  }
+
+}
+

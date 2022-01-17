@@ -28,6 +28,7 @@ import { InputField } from "../../../molecules/control/InputField/InputField";
 import { LoadingOverlay } from "../../../atoms/LoadingOverlay/LoadingOverlay";
 import { ImageUploader } from "../../../molecules/control/ImageUploader/ImageUploader";
 import { InputLabel } from "../../../atoms/InputLabel/InputLabel";
+import { Checkbox } from "../../../molecules/control/Checkbox/Checkbox";
 
 // - バリデーション =======================================================================================================
 import {
@@ -49,6 +50,7 @@ export type SignUpInputValues = {
   userName: string;
   avatarImageURI?: string;
   gender: Genders;
+  checkbox: boolean;
 };
 
 
@@ -187,6 +189,17 @@ export const SignUpControlGroup: VFC = memo(() => {
             maximalImagesCount={userValidations.avatarImage.maximalImagesCount}
             inputProps={register("avatarImageURI", {
               required: userValidations.avatarImage.required
+            })}
+          />
+        </div>
+
+        <div className={styles.inputContainer}>
+          <Checkbox
+            label="プライバシーポリシーに同意する"
+            required={true}
+            id="checkbox"
+            inputProps={register("checkbox",{
+              required: true
             })}
           />
         </div>
